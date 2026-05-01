@@ -383,12 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         syncProgressiveStages();
 
-        // La reserva real no depende del submit local. Bloqueamos cualquier submit accidental,
-        // incluido el que podria disparar un boton externo renderizado dentro del form.
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-        });
-
         const openCalendarButton = document.getElementById("submit-request-btn");
         const openGoogleCalendar = () => {
             const serviceValue = getSelectedServiceValue();
