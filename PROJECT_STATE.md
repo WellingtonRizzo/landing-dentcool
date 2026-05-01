@@ -4,6 +4,23 @@
 
 Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en Vercel y conectada a Google Calendar Appointment Schedule.
 
+## Versión estable protegida
+
+- Nombre de referencia: `version-faq-estable`
+- Commit base protegido: `af0934b`
+- Objetivo de esta referencia: conservar la versión donde:
+  - la agenda móvil dejó de mostrar código roto en la cabecera
+  - el botón nativo de Google Calendar volvió a cargarse en desktop
+  - la agenda mantiene FAQ compacta y barra de apoyo por WhatsApp
+  - la home mantiene su sección de preguntas frecuentes
+- Si una versión futura se daña, esta es la referencia a la que se debe volver antes de seguir iterando.
+- Restauración recomendada:
+  - revisar primero la tag `version-faq-estable`
+  - comparar cambios nuevos contra ese punto antes de mezclar o rehacer Calendar
+- Regla operativa:
+  - no tocar el flujo de Google Calendar en desktop sin validar primero contra esta versión protegida
+  - no volver a poner comentarios dentro de etiquetas HTML como `<body ...>`
+
 ## Archivos principales
 
 - `index.html`: landing principal.
@@ -89,6 +106,7 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - La agenda móvil quedó simplificada para mostrar un solo CTA hacia Google Calendar.
 - Se agregó una sección FAQ visual al final de `agenda.html`.
 - La preselección local de fecha, jornada y horario quedó oculta al público, pero conservada en código para una futura agenda propia.
+- Se dejó una versión protegida en git para poder volver a esta base si cambios futuros rompen la agenda o el responsive móvil.
 
 ### URLs activas
 
@@ -115,6 +133,7 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - Campo personalizado en Google para guardar `Tratamiento o pack de interés`.
 - El tratamiento elegido sí aparece en los detalles del evento dentro del calendario de DentCool.
 - FAQ visual agregada para aclarar reserva, duración, WhatsApp y evaluación.
+- FAQ en home y FAQ compacta en agenda ya forman parte de la versión base protegida.
 
 ### Qué se comprobó hoy
 
@@ -164,6 +183,7 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - En móvil ya no debería aparecer el botón del popup oficial de Google; solo el CTA fallback.
 - La capa local de fecha/horario quedó guardada en código pero no visible al paciente.
 - Para cambios de disponibilidad, duración o campos de reserva, editar primero Google Calendar y luego alinear la UI local si hace falta.
+- Antes de tocar de nuevo `agenda.html`, `css/styles.css` o `js/script.js` en la zona de reserva, comparar contra `version-faq-estable`.
 
 ## Nota de continuidad 2026-04-30
 
