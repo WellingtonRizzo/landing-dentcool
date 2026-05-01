@@ -10,11 +10,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Script oficial de Google Calendar para renderizar el popup de reserva en desktop. -->
     <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 </head>
 <body
+    class="booking-mode-pending"
     data-page="agenda"
+    <!--
+        data-local-scheduling controla la capa local de fecha y horario.
+        disabled: la UI publica oculta esa preseleccion y deriva a Google Calendar.
+        enabled: permite reactivar la agenda propia futura desde esta pagina.
+    -->
+    data-local-scheduling="disabled"
+    <!-- Link directo de reserva real. Se usa como fallback en movil. -->
     data-booking-url="https://calendar.app.google/t4SYc3LSs9vQNMop7"
+    <!-- URL del popup oficial de Google Calendar. Se usa solo en desktop. -->
     data-booking-popup-url="https://calendar.google.com/calendar/appointments/schedules/AcZssZ093-U5sI0xZaYQB2Lm0P-JtiJ_L2tcsTr6YFaS9R5cd5i26jh0dkR94ZKwmYroNIilFoiZhl14?gv=true">
     <header class="header">
         <div class="container header-container">
@@ -25,6 +35,7 @@
             </div>
             <nav class="nav">
                 <a href="index.html" class="nav-link">Volver al inicio</a>
+                <!-- Reemplazar 56912345678 por el numero real cuando DentCool lo defina. -->
                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20un%20tratamiento%20o%20pack%20dental%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-track="whatsapp_click" data-track-label="agenda_header_whatsapp">WhatsApp</a>
             </nav>
         </div>
@@ -35,7 +46,7 @@
             <div class="container agenda-hero-grid">
                 <div class="agenda-hero-copy">
                     <div class="eyebrow">Agenda DentCool</div>
-                    <h1>Elige tu tratamiento y revisa horarios disponibles.</h1>
+                    <h1>Elige tu tratamiento y continúa a la agenda real.</h1>
                     <div class="agenda-hero-signals">
                         <span class="agenda-signal">Reserva en pocos pasos</span>
                         <span class="agenda-signal">Citas de 60 minutos</span>
@@ -43,7 +54,7 @@
                     </div>
                     <ul class="agenda-list">
                         <li>Limpiezas, blanqueamiento, restauraciones y packs.</li>
-                        <li>Horarios disponibles de lunes a sábado.</li>
+                        <li>Horarios disponibles de lunes a sábado en Google Calendar.</li>
                         <li>Si tienes dudas, escríbenos por WhatsApp.</li>
                     </ul>
                 </div>
@@ -54,8 +65,8 @@
             <div class="container booking-layout">
                 <div class="booking-main-card">
                     <div class="section-eyebrow">Agenda</div>
-                    <h2>Agenda tu horario</h2>
-                    <p class="booking-intro">Selecciona tratamiento, fecha, horario y completa tus datos para pasar a la reserva.</p>
+                    <h2>Agenda tu reserva</h2>
+                    <p class="booking-intro">Selecciona tu tratamiento, completa tus datos y continúa a Google Calendar para confirmar fecha y horario.</p>
                     <div class="booking-live-summary" aria-live="polite">
                         <span class="booking-live-label">Importante</span>
                         <p>Después de este paso te llevaremos a la agenda real para confirmar tu cita de 60 minutos.</p>
@@ -83,7 +94,8 @@
                                 </select>
                             </div>
 
-                            <div class="booking-calendar-card booking-stage" id="stage-calendar">
+                            <!-- Flujo local de fecha conservado para una futura agenda propia dentro de la landing. -->
+                            <div class="booking-calendar-card booking-stage booking-future-hidden" id="stage-calendar" aria-hidden="true">
                                 <div class="stage-heading">
                                     <span class="stage-badge">2</span>
                                     <h3>Elige tu fecha</h3>
@@ -136,7 +148,8 @@
                                 </div>
                             </div>
 
-                            <div class="booking-slots-card booking-stage" id="stage-slots">
+                            <!-- Flujo local de horarios conservado para futura activacion sin depender de Google Calendar. -->
+                            <div class="booking-slots-card booking-stage booking-future-hidden" id="stage-slots" aria-hidden="true">
                                 <div class="stage-heading">
                                     <span class="stage-badge">3</span>
                                     <h3>Elige tu horario</h3>
@@ -157,11 +170,11 @@
 
                         <form class="booking-form-card booking-stage" id="booking-request-form">
                             <div class="stage-heading">
-                                <span class="stage-badge">4</span>
+                                <span class="stage-badge">2</span>
                                 <h3>Tus datos</h3>
                             </div>
                             <p class="stage-helper">Completa tus datos y continúa a la agenda de reserva.</p>
-                            <p class="booking-form-note">La confirmación final de tu hora se realiza en la agenda de Google Calendar.</p>
+                            <p class="booking-form-note">La confirmación final de tu hora, fecha y horario se realiza en la agenda de Google Calendar.</p>
                             <div class="booking-form-grid">
                                 <label class="booking-field">
                                     <span>Nombre completo</span>
@@ -175,11 +188,12 @@
                                     <span>Correo electrónico</span>
                                     <input type="email" id="patient-email" name="email" placeholder="Ej. nombre@email.com" required>
                                 </label>
-                                <label class="booking-field">
+                                <!-- Campos locales reservados para futura agenda propia desde la pagina. -->
+                                <label class="booking-field booking-field-future-hidden" aria-hidden="true">
                                     <span>Fecha preferida</span>
                                     <input type="text" id="selected-date" name="selected_date" value="2026-05-04" readonly>
                                 </label>
-                                <label class="booking-field">
+                                <label class="booking-field booking-field-future-hidden" aria-hidden="true">
                                     <span>Horario preferido</span>
                                     <input type="text" id="selected-slot" name="selected_slot" value="09:30" readonly>
                                 </label>
@@ -190,10 +204,12 @@
                             </div>
                             <div class="booking-form-actions">
                                 <div class="stage-heading stage-heading-submit">
-                                    <span class="stage-badge">5</span>
+                                    <span class="stage-badge">3</span>
                                     <h3>Continuar a la reserva</h3>
                                 </div>
+                                <!-- Google inserta aqui el boton oficial del popup en desktop. -->
                                 <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
+                                <!-- Fallback movil: abre la reserva real usando el link de Google Calendar. -->
                                 <button type="submit" class="btn btn-primary btn-full booking-submit-btn booking-submit-fallback" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>
                             </div>
@@ -204,11 +220,44 @@
                 </div>
             </div>
         </section>
+
+        <section class="agenda-faq-section" aria-labelledby="agenda-faq-title">
+            <div class="container">
+                <div class="agenda-faq-shell">
+                    <div class="section-eyebrow">FAQ</div>
+                    <div class="agenda-faq-heading">
+                        <h2 id="agenda-faq-title">Preguntas frecuentes antes de reservar</h2>
+                        <p>Información breve para que el paso a Google Calendar sea más claro.</p>
+                    </div>
+
+                    <div class="agenda-faq-grid">
+                        <details class="faq-card" open>
+                            <summary>¿La reserva se confirma aquí mismo?</summary>
+                            <p>No. Aquí eliges tu preferencia y luego confirmas la cita real en Google Calendar.</p>
+                        </details>
+                        <details class="faq-card">
+                            <summary>¿Cuánto dura la cita?</summary>
+                            <p>La evaluación o atención se agenda en bloques de 60 minutos.</p>
+                        </details>
+                        <details class="faq-card">
+                            <summary>¿Puedo resolver dudas antes de reservar?</summary>
+                            <p>Sí. Si prefieres, puedes escribir por WhatsApp antes de confirmar tu hora.</p>
+                        </details>
+                        <details class="faq-card">
+                            <summary>¿El tratamiento definitivo se define al reservar?</summary>
+                            <p>No siempre. Algunos tratamientos quedan sujetos a evaluación y diagnóstico profesional.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- CTA flotante de WhatsApp. Mantener el mismo numero real en todos los enlaces al actualizarlo. -->
     <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20un%20tratamiento%20o%20pack%20dental%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Hablar por WhatsApp" data-track="whatsapp_click" data-track-label="agenda_floating_whatsapp">
         <img src="whatsapp-symbol-logo-svgrepo-com.svg" alt="WhatsApp" class="whatsapp-icon">
     </a>
+    <!-- JS unico del sitio: tracking, modo movil/desktop y validacion previa a Google Calendar. -->
     <script src="js/script.js"></script>
 </body>
 </html>

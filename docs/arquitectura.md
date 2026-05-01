@@ -37,3 +37,35 @@ DentCool es una Landing Page moderna y premium para una consulta dental. El obje
 - Jerarquía de encabezados (`<h1>`, `<h2>`, `<h3>`).
 - Imágenes comprimidas y optimizadas.
 - Carga asíncrona de scripts de terceros (Pixel).
+
+## 6. Puntos de integración reales y futuros
+
+### Google Calendar
+- La reserva real actual vive en `agenda.html`.
+- `data-booking-url`: link real de Google Calendar usado como fallback en móvil.
+- `data-booking-popup-url`: URL del popup oficial de Google usada en desktop.
+- `js/script.js` decide qué flujo usar según dispositivo.
+
+### Agenda propia futura
+- La antigua capa local de fecha, jornada y horario no fue borrada.
+- Quedó oculta en `agenda.html` con `data-local-scheduling="disabled"`.
+- Para reactivarla, el punto de entrada está en `agenda.html` y la lógica ya existe en `js/script.js`.
+
+### Meta Pixel
+- El placeholder del Pixel está en `index.html`.
+- El tracking defensivo ya existe en `js/script.js` y usa `fbq` solo si está disponible.
+- Falta instalar el ID real y decidir la definición final de `Lead`.
+
+### WhatsApp
+- Los links de WhatsApp están en `index.html` y `agenda.html`.
+- Hoy usan un número placeholder y deben actualizarse todos juntos cuando exista el número real.
+
+### Clerk
+- Hoy no está integrado.
+- Si se suma autenticación más adelante, no debería entrar directo en la landing pública.
+- El lugar lógico sería un flujo aparte para backoffice, panel o gestión interna de reservas/pacientes.
+
+### Neon
+- Hoy no está integrado.
+- Si más adelante DentCool guarda reservas, leads o pacientes propios, Neon sería la capa de base de datos.
+- En ese escenario convendría agregar backend o funciones serverless; no corresponde meter credenciales o consultas directas en esta landing estática.

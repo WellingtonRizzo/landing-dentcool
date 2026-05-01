@@ -13,7 +13,11 @@
 
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- Meta Pixel Code Placeholder -->
+    <!--
+        Meta Pixel placeholder.
+        Cuando exista el Pixel real, reemplazar TU_PIXEL_ID_AQUI y descomentar este bloque.
+        El tracking defensivo del sitio ya vive en js/script.js y no falla si fbq no existe.
+    -->
     <!--
     <script>
     !function(f,b,e,v,n,t,s)
@@ -59,6 +63,7 @@
                     <a href="#tratamientos" class="btn btn-primary btn-large">Ver tratamientos</a>
                     <a href="#pack-premium" class="btn btn-secondary btn-large">Ver packs</a>
                     <a href="agenda.html" class="btn btn-primary btn-large" data-track="schedule_click" data-track-label="hero_agenda">Revisar agenda</a>
+                    <!-- Reemplazar 56912345678 por el numero real cuando DentCool defina su WhatsApp comercial. -->
                     <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20cotizar%20un%20tratamiento%20o%20pack%20dental%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-large" data-track="whatsapp_click" data-track-label="hero_whatsapp">Hablar por WhatsApp</a>
                 </div>
                 <div class="hero-proof">
@@ -281,10 +286,12 @@
         </div>
     </footer>
 
+    <!-- CTA flotante de WhatsApp. Mantener el mismo numero real que en los otros enlaces cuando se actualice. -->
     <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20agendar%20una%20evaluaci%C3%B3n%20dental%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Hablar por WhatsApp" data-track="whatsapp_click" data-track-label="floating_whatsapp">
         <img src="whatsapp-symbol-logo-svgrepo-com.svg" alt="WhatsApp" class="whatsapp-icon">
     </a>
 
+    <!-- JS unico del sitio: scroll suave, tracking defensivo y logica de agenda. -->
     <script src="js/script.js"></script>
 </body>
 </html>

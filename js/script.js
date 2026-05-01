@@ -1,8 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Google Calendar: fallback movil y popup desktop toman estas URLs desde data-* en agenda.html.
     const bookingUrl = document.body.dataset.bookingUrl || "";
     const bookingPopupUrl = document.body.dataset.bookingPopupUrl || "";
+    // La capa local de fecha/horario puede reactivarse mas adelante sin reescribir la agenda.
+    const localSchedulingEnabled = document.body.dataset.localScheduling !== "disabled";
+    // Un solo camino por dispositivo: popup en desktop, link real en movil.
+    const bookingModeQuery = window.matchMedia("(max-width: 768px)");
 
     const header = document.querySelector(".header");
+
+    const syncBookingMode = () => {
+        document.body.classList.remove("booking-mode-pending", "booking-mode-mobile", "booking-mode-desktop");
+        document.body.classList.add(bookingModeQuery.matches ? "booking-mode-mobile" : "booking-mode-desktop");
+    };
+
+    syncBookingMode();
+
+    if (typeof bookingModeQuery.addEventListener === "function") {
+        bookingModeQuery.addEventListener("change", syncBookingMode);
+    } else if (typeof bookingModeQuery.addListener === "function") {
+        bookingModeQuery.addListener(syncBookingMode);
+    }
 
     if (header) {
         const syncHeaderState = () => {
@@ -42,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Tracking defensivo: si Meta Pixel o dataLayer no existen, la web sigue funcionando igual.
     const safeTrack = (eventName, payload = {}) => {
         if (typeof window.fbq === "function") {
             window.fbq("trackCustom", eventName, payload);
@@ -60,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         safeTrack("DentCoolPageView", { page_name: pageName });
     };
 
+    // Todos los enlaces con data-track reportan eventos sin acoplar la UI a una plataforma especifica.
     const trackClicks = () => {
         document.querySelectorAll("[data-track]").forEach((element) => {
             element.addEventListener("click", () => {
@@ -88,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    // Permite llegar desde una card o pack con el tratamiento ya preseleccionado.
     const applyServiceFromQuery = () => {
         const params = new URLSearchParams(window.location.search);
         const service = params.get("servicio");
@@ -108,9 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    // En desktop Google renderiza aqui su boton oficial. En movil no se usa popup para evitar doble CTA.
     const initializeGoogleCalendarPopup = () => {
         const popupHost = document.getElementById("google-calendar-popup-host");
-        if (!popupHost || !bookingPopupUrl) {
+        if (!popupHost || !bookingPopupUrl || bookingModeQuery.matches) {
             return null;
         }
 
@@ -171,6 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const stageSlots = document.getElementById("stage-slots");
         const stageForm = document.getElementById("booking-request-form");
         let popupBound = false;
+        // Horarios locales conservados para una futura agenda propia dentro de la landing.
         const slotMap = {
             manana: ["09:30", "10:30", "11:30", "12:30"],
             tarde: ["13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30"]
@@ -187,7 +210,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const syncProgressiveStages = () => {
             const serviceComplete = Boolean(serviceSelect && serviceSelect.value);
-            const scheduleComplete = Boolean(shiftSelect && shiftSelect.value && selectedDateField && selectedDateField.value && selectedSlotField && selectedSlotField.value);
+            const scheduleComplete = localSchedulingEnabled
+                ? Boolean(shiftSelect && shiftSelect.value && selectedDateField && selectedDateField.value && selectedSlotField && selectedSlotField.value)
+                : true;
             const contactComplete = Boolean(nameField && nameField.value.trim() && phoneField && phoneField.value.trim() && emailField && emailField.value.trim());
 
             setStageVisual(stageService, {
@@ -195,15 +220,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 complete: serviceComplete
             });
 
-            setStageVisual(stageCalendar, {
-                active: serviceComplete && !scheduleComplete,
-                complete: scheduleComplete
-            });
+            // Si la agenda local esta oculta, el formulario avanza directo a los datos del paciente.
+            if (localSchedulingEnabled) {
+                setStageVisual(stageCalendar, {
+                    active: serviceComplete && !scheduleComplete,
+                    complete: scheduleComplete
+                });
 
-            setStageVisual(stageSlots, {
-                active: serviceComplete && !scheduleComplete,
-                complete: scheduleComplete
-            });
+                setStageVisual(stageSlots, {
+                    active: serviceComplete && !scheduleComplete,
+                    complete: scheduleComplete
+                });
+            }
 
             setStageVisual(stageForm, {
                 active: serviceComplete && scheduleComplete,
@@ -405,10 +433,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         syncProgressiveStages();
 
+        // En movil el submit deriva al link real de Google Calendar.
         form.addEventListener("submit", (event) => {
             event.preventDefault();
 
-            const useMobileFallback = window.matchMedia("(max-width: 768px)").matches;
+            const useMobileFallback = bookingModeQuery.matches;
             if (!useMobileFallback) {
                 return;
             }

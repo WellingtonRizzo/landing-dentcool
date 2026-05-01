@@ -86,6 +86,9 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - La agenda real ya funciona con Google Calendar Appointment Schedule.
 - El flujo duplicado quedó corregido: en desktop se usa popup oficial de Google y en móvil se mantiene fallback al link.
 - Ya se validó una reserva real de prueba.
+- La agenda móvil quedó simplificada para mostrar un solo CTA hacia Google Calendar.
+- Se agregó una sección FAQ visual al final de `agenda.html`.
+- La preselección local de fecha, jornada y horario quedó oculta al público, pero conservada en código para una futura agenda propia.
 
 ### URLs activas
 
@@ -106,9 +109,12 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - Vercel conectado al repo `WellingtonRizzo/landing-dentcool`.
 - `agenda.html` con popup oficial de Google Calendar en desktop.
 - Fallback móvil al link de Google Calendar.
+- El doble botón hacia Google Calendar en móvil quedó eliminado.
+- La agenda pública ya no muestra la preselección local de fecha y horario.
 - Campo local `Comentario o necesidad` con corrector ortográfico del navegador.
 - Campo personalizado en Google para guardar `Tratamiento o pack de interés`.
 - El tratamiento elegido sí aparece en los detalles del evento dentro del calendario de DentCool.
+- FAQ visual agregada para aclarar reserva, duración, WhatsApp y evaluación.
 
 ### Qué se comprobó hoy
 
@@ -116,6 +122,7 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - La reserva se confirma dentro del popup.
 - El flujo duplicado `popup + redirección posterior` quedó corregido.
 - El resumen final del popup no muestra el tratamiento, pero el evento guardado sí lo conserva.
+- La agenda ya no debería mostrar dos CTA iguales a Google Calendar en versión móvil.
 
 ### Limitaciones actuales confirmadas
 
@@ -132,25 +139,30 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - [x] `agenda.html` conectada a Google Calendar.
 - [x] Popup oficial de Google funcionando en desktop.
 - [x] Fallback móvil al link de reserva.
+- [x] Doble CTA de Google Calendar corregido en móvil.
+- [x] Preselección local oculta sin borrar el código base para agenda futura.
 - [x] Reserva real validada de punta a punta.
 - [x] Dirección real puesta en Google Calendar.
 - [x] Cita configurada en `60 minutos`.
 - [x] Disponibilidad activa de `lunes a sábado`.
 - [x] Campo `Tratamiento o pack de interés` guardándose en el evento.
 - [x] Corrector ortográfico activado en `Comentario o necesidad`.
+- [x] Sección FAQ agregada en la agenda.
 
 #### Falta
 
 - [ ] Reemplazar WhatsApp placeholder por el número real.
 - [ ] Instalar Meta Pixel real.
 - [ ] Validar el flujo completo en móvil real.
-- [ ] Revisar si conviene simplificar más la preselección local antes del popup.
+- [ ] Decidir cuándo reactivar la preselección local si DentCool agenda directamente desde la página.
 - [ ] Ajustar horarios futuros cuando el negocio pase a tardes + sábado.
 
 ### Nota operativa para retomar
 
 - Si mañana pruebas desde desktop, el flujo correcto es: completar datos locales y reservar desde el botón oficial de Google dentro del bloque final.
 - Si pruebas desde móvil, el cierre esperado es mediante link/fallback a Google Calendar.
+- En móvil ya no debería aparecer el botón del popup oficial de Google; solo el CTA fallback.
+- La capa local de fecha/horario quedó guardada en código pero no visible al paciente.
 - Para cambios de disponibilidad, duración o campos de reserva, editar primero Google Calendar y luego alinear la UI local si hace falta.
 
 ## Nota de continuidad 2026-04-30
