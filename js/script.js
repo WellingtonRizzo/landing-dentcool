@@ -322,8 +322,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // El boton oficial de Google queda dentro de un <form>. Forzamos type=button
-            // para que no dispare submit local y no cierre el popup al abrirse.
+            // El boton oficial de Google se renderiza dentro del bloque de reserva.
+            // Forzamos type=button para evitar comportamiento accidental si Google usa <button>.
             googleButton.setAttribute("type", "button");
         };
 
@@ -383,23 +383,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         syncProgressiveStages();
 
-        const openCalendarButton = document.getElementById("submit-request-btn");
-        const openGoogleCalendar = () => {
-            const serviceValue = getSelectedServiceValue();
-            notifyAndTrackBookingIntent(serviceValue);
-
-            window.setTimeout(() => {
-                if (bookingUrl) {
-                    window.location.href = bookingUrl;
-                }
-            }, 300);
-        };
-
         // Importante:
         // - Desktop usa el snippet oficial de Google Calendar escrito en agenda.html.
-        // - Este listener queda solo para movil, donde usamos el link directo como fallback.
-        if (openCalendarButton && bookingModeQuery.matches) {
-            openCalendarButton.addEventListener("click", openGoogleCalendar);
+        // - Movil usa un link directo a bookingUrl como fallback, no un button con JS.
+        if (submitButton && bookingModeQuery.matches) {
+            submitButton.addEventListener("click", () => {
+                const serviceValue = getSelectedServiceValue();
+                notifyAndTrackBookingIntent(serviceValue);
+            });
         }
     };
 

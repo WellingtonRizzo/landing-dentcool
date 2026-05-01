@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda tu hora | DentCool</title>
     <meta name="description" content="Revisa tratamientos y horarios disponibles en DentCool. Completa tus datos para reservar tu hora.">
-    <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Script oficial de Google Calendar para renderizar el popup de reserva en desktop. -->
-    <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 </head>
 <body
     class="booking-mode-pending"
@@ -239,11 +236,10 @@
                                     <span class="stage-badge">3</span>
                                     <h3>Continuar a la reserva</h3>
                                 </div>
-                                <!--
-                                    Desktop: usar el snippet oficial de Google Calendar en este lugar.
-                                    No reemplazar este bloque por un boton propio si se quiere conservar el popup oficial.
-                                -->
+                                <!-- Google Calendar Appointment Scheduling begin -->
                                 <div class="booking-popup-host" aria-hidden="true">
+                                    <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+                                    <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
                                     <script>
                                     (function() {
                                       var target = document.currentScript;
@@ -258,8 +254,9 @@
                                     })();
                                     </script>
                                 </div>
-                                <!-- Movil: este boton propio funciona como fallback al link directo de Google Calendar. -->
-                                <button type="button" class="btn btn-primary btn-full booking-submit-btn booking-submit-fallback" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
+                                <!-- end Google Calendar Appointment Scheduling -->
+                                <!-- Movil: fallback directo al link real de Google Calendar, sin depender de JS. -->
+                                <a href="https://calendar.app.google/t4SYc3LSs9vQNMop7" class="btn btn-primary btn-full booking-submit-btn booking-submit-fallback" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</a>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>
                             </div>
                             <p class="booking-disclaimer">Si tienes dudas, también puedes continuar por WhatsApp.</p>
