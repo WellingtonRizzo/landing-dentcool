@@ -135,6 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const popupHost = document.querySelector(".booking-popup-host");
+
         const serviceSelect = document.getElementById("service-select");
         const shiftSelect = document.getElementById("shift-select");
         const selectedDateField = document.getElementById("selected-date");
@@ -310,6 +312,34 @@ document.addEventListener("DOMContentLoaded", () => {
             syncShiftSlots();
         }
 
+        const hardenGooglePopupButton = () => {
+            if (!popupHost) {
+                return;
+            }
+
+            const googleButton = popupHost.querySelector("button");
+            if (!googleButton) {
+                return;
+            }
+
+            // El boton oficial de Google queda dentro de un <form>. Forzamos type=button
+            // para que no dispare submit local y no cierre el popup al abrirse.
+            googleButton.setAttribute("type", "button");
+        };
+
+        if (popupHost && typeof MutationObserver === "function") {
+            const popupObserver = new MutationObserver(() => {
+                hardenGooglePopupButton();
+            });
+
+            popupObserver.observe(popupHost, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        hardenGooglePopupButton();
+
         [serviceSelect, shiftSelect, nameField, phoneField, emailField].forEach((field) => {
             if (!field) {
                 return;
@@ -352,6 +382,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         syncProgressiveStages();
+
+        // La reserva real no depende del submit local. Bloqueamos cualquier submit accidental,
+        // incluido el que podria disparar un boton externo renderizado dentro del form.
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+        });
 
         const openCalendarButton = document.getElementById("submit-request-btn");
         const openGoogleCalendar = () => {
