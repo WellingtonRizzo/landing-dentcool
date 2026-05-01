@@ -200,7 +200,7 @@
                             </div>
                         </div>
 
-                        <form class="booking-form-card booking-stage" id="booking-request-form">
+                        <form class="booking-form-card booking-stage" id="booking-request-form" novalidate>
                             <div class="stage-heading">
                                 <span class="stage-badge">2</span>
                                 <h3>Tus datos</h3>
@@ -210,15 +210,15 @@
                             <div class="booking-form-grid">
                                 <label class="booking-field">
                                     <span>Nombre completo</span>
-                                    <input type="text" id="patient-name" name="name" placeholder="Ej. Juan Pérez" required>
+                                    <input type="text" id="patient-name" name="name" placeholder="Ej. Juan Pérez">
                                 </label>
                                 <label class="booking-field">
                                     <span>Teléfono</span>
-                                    <input type="tel" id="patient-phone" name="phone" placeholder="Ej. +56 9 1234 5678" required>
+                                    <input type="tel" id="patient-phone" name="phone" placeholder="Ej. +56 9 1234 5678">
                                 </label>
                                 <label class="booking-field booking-field-full">
                                     <span>Correo electrónico</span>
-                                    <input type="email" id="patient-email" name="email" placeholder="Ej. nombre@email.com" required>
+                                    <input type="email" id="patient-email" name="email" placeholder="Ej. nombre@email.com">
                                 </label>
                                 <!-- Campos locales reservados para futura agenda propia desde la pagina. -->
                                 <label class="booking-field booking-field-future-hidden" aria-hidden="true">
@@ -242,7 +242,7 @@
                                 <!-- Google inserta aqui el boton oficial del popup en desktop. -->
                                 <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
                                 <!-- Fallback movil: abre la reserva real usando el link de Google Calendar. -->
-                                <button type="submit" class="btn btn-primary btn-full booking-submit-btn" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
+                                <button type="button" class="btn btn-primary btn-full booking-submit-btn" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>
                             </div>
                             <p class="booking-disclaimer">Si tienes dudas, también puedes continuar por WhatsApp.</p>

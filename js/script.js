@@ -332,16 +332,17 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const notifyAndTrackBookingIntent = (serviceValue) => {
+            const normalizedServiceValue = serviceValue || "Reserva general";
             const date = selectedDateField ? selectedDateField.value : "";
             const slot = selectedSlotField ? selectedSlotField.value : "";
 
             if (message) {
-                message.textContent = `Todo listo. Te llevaremos a Google Calendar para confirmar ${serviceValue}${date && slot ? ` el ${date} a las ${slot}` : ""}.`;
+                message.textContent = `Todo listo. Te llevaremos a Google Calendar para confirmar ${normalizedServiceValue}${date && slot ? ` el ${date} a las ${slot}` : ""}.`;
                 message.className = "form-message success";
             }
 
             safeTrack("booking_request_submitted", {
-                service_name: serviceValue,
+                service_name: normalizedServiceValue,
                 shift_name: shiftSelect ? shiftSelect.value : "",
                 preferred_date: date,
                 preferred_time: slot,
@@ -351,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (typeof window.fbq === "function") {
                 window.fbq("track", "Lead", {
-                    content_name: serviceValue
+                    content_name: normalizedServiceValue
                 });
             }
         };
@@ -411,34 +412,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         syncProgressiveStages();
 
-        // El boton visible siempre abre Google Calendar: popup en desktop y link directo en movil.
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-
+        const openCalendarButton = document.getElementById("submit-request-btn");
+        const openGoogleCalendar = () => {
             const serviceValue = getSelectedServiceValue();
-            if (!serviceValue) {
-                if (message) {
-                    message.textContent = "Selecciona un tratamiento o pack antes de enviar la solicitud.";
-                    message.className = "form-message";
-                }
-                return;
-            }
-
-            if (!form.reportValidity()) {
-                return;
-            }
-
             notifyAndTrackBookingIntent(serviceValue);
 
             if (!bookingModeQuery.matches) {
-                const popupButton = getPopupButton();
-                if (popupButton) {
-                    popupButton.click();
-                    return;
+                if (bookingPopupUrl) {
+                    const popupWindow = window.open(
+                        bookingPopupUrl,
+                        "dentcoolGoogleCalendar",
+                        "popup=yes,width=980,height=860,resizable=yes,scrollbars=yes"
+                    );
+
+                    if (popupWindow) {
+                        popupWindow.focus();
+                        return;
+                    }
                 }
 
-                if (bookingPopupUrl) {
-                    window.location.href = bookingPopupUrl;
+                if (bookingUrl) {
+                    window.location.href = bookingUrl;
                     return;
                 }
             }
@@ -448,7 +442,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = bookingUrl;
                 }
             }, 300);
-        });
+        };
+
+        if (openCalendarButton) {
+            openCalendarButton.addEventListener("click", openGoogleCalendar);
+        }
     };
 
     trackPageContext();
