@@ -323,59 +323,37 @@ document.addEventListener("DOMContentLoaded", () => {
             return selectedOption && serviceSelect && serviceSelect.value ? selectedOption.text.trim() : "";
         };
 
-        const bindPopupValidation = () => {
-            if (!popupHost || popupBound) {
-                return;
+        const getPopupButton = () => {
+            if (!popupHost) {
+                return null;
             }
 
-            const popupButton = popupHost.querySelector("button");
-            if (!popupButton) {
-                return;
+            return popupHost.querySelector("button");
+        };
+
+        const notifyAndTrackBookingIntent = (serviceValue) => {
+            const date = selectedDateField ? selectedDateField.value : "";
+            const slot = selectedSlotField ? selectedSlotField.value : "";
+
+            if (message) {
+                message.textContent = `Todo listo. Te llevaremos a Google Calendar para confirmar ${serviceValue}${date && slot ? ` el ${date} a las ${slot}` : ""}.`;
+                message.className = "form-message success";
             }
 
-            popupBound = true;
-            popupButton.addEventListener("click", (event) => {
-                const serviceValue = getSelectedServiceValue();
+            safeTrack("booking_request_submitted", {
+                service_name: serviceValue,
+                shift_name: shiftSelect ? shiftSelect.value : "",
+                preferred_date: date,
+                preferred_time: slot,
+                patient_name: nameField ? nameField.value.trim() : "",
+                page_name: document.body.dataset.page || "agenda"
+            });
 
-                if (!serviceValue) {
-                    event.preventDefault();
-                    event.stopImmediatePropagation();
-                    if (message) {
-                        message.textContent = "Selecciona un tratamiento o pack antes de continuar.";
-                        message.className = "form-message";
-                    }
-                    return;
-                }
-
-                if (!form.reportValidity()) {
-                    event.preventDefault();
-                    event.stopImmediatePropagation();
-                    return;
-                }
-
-                const date = selectedDateField ? selectedDateField.value : "";
-                const slot = selectedSlotField ? selectedSlotField.value : "";
-
-                if (message) {
-                    message.textContent = `Todo listo. Abriremos Google Calendar para confirmar ${serviceValue} el ${date} a las ${slot}.`;
-                    message.className = "form-message success";
-                }
-
-                safeTrack("booking_request_submitted", {
-                    service_name: serviceValue,
-                    shift_name: shiftSelect ? shiftSelect.value : "",
-                    preferred_date: date,
-                    preferred_time: slot,
-                    patient_name: nameField ? nameField.value.trim() : "",
-                    page_name: document.body.dataset.page || "agenda"
+            if (typeof window.fbq === "function") {
+                window.fbq("track", "Lead", {
+                    content_name: serviceValue
                 });
-
-                if (typeof window.fbq === "function") {
-                    window.fbq("track", "Lead", {
-                        content_name: serviceValue
-                    });
-                }
-            }, true);
+            }
         };
 
         if (shiftSelect) {
@@ -384,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const popupPoll = window.setInterval(() => {
-            bindPopupValidation();
+            popupBound = Boolean(getPopupButton());
             if (popupBound) {
                 window.clearInterval(popupPoll);
             }
@@ -433,14 +411,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         syncProgressiveStages();
 
-        // En movil el submit deriva al link real de Google Calendar.
+        // El boton visible siempre abre Google Calendar: popup en desktop y link directo en movil.
         form.addEventListener("submit", (event) => {
             event.preventDefault();
-
-            const useMobileFallback = bookingModeQuery.matches;
-            if (!useMobileFallback) {
-                return;
-            }
 
             const serviceValue = getSelectedServiceValue();
             if (!serviceValue) {
@@ -451,35 +424,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const name = document.getElementById("patient-name");
-            const date = selectedDateField ? selectedDateField.value : "";
-            const slot = selectedSlotField ? selectedSlotField.value : "";
-
-            if (message) {
-                message.textContent = `Todo listo. Te llevaremos a Google Calendar para confirmar ${serviceValue} el ${date} a las ${slot}.`;
-                message.className = "form-message success";
+            if (!form.reportValidity()) {
+                return;
             }
 
-            safeTrack("booking_request_submitted", {
-                service_name: serviceValue,
-                shift_name: shiftSelect ? shiftSelect.value : "",
-                preferred_date: date,
-                preferred_time: slot,
-                patient_name: name ? name.value.trim() : "",
-                page_name: document.body.dataset.page || "agenda"
-            });
+            notifyAndTrackBookingIntent(serviceValue);
 
-            if (typeof window.fbq === "function") {
-                window.fbq("track", "Lead", {
-                    content_name: serviceValue
-                });
+            if (!bookingModeQuery.matches) {
+                const popupButton = getPopupButton();
+                if (popupButton) {
+                    popupButton.click();
+                    return;
+                }
+
+                if (bookingPopupUrl) {
+                    window.location.href = bookingPopupUrl;
+                    return;
+                }
             }
 
             window.setTimeout(() => {
                 if (bookingUrl) {
                     window.location.href = bookingUrl;
                 }
-            }, 500);
+            }, 300);
         });
     };
 

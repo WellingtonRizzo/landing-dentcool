@@ -229,7 +229,7 @@
                                     <span>Horario preferido</span>
                                     <input type="text" id="selected-slot" name="selected_slot" value="09:30" readonly>
                                 </label>
-                                <label class="booking-field booking-field-full">
+                                <label class="booking-field booking-field-full booking-field-future-hidden" aria-hidden="true">
                                     <span>Comentario o necesidad</span>
                                     <textarea id="patient-notes" name="notes" rows="4" placeholder="Ej. Quiero revisar pack sonrisa o confirmar si califico para blanqueamiento." spellcheck="true" autocapitalize="sentences"></textarea>
                                 </label>
@@ -242,7 +242,7 @@
                                 <!-- Google inserta aqui el boton oficial del popup en desktop. -->
                                 <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
                                 <!-- Fallback movil: abre la reserva real usando el link de Google Calendar. -->
-                                <button type="submit" class="btn btn-primary btn-full booking-submit-btn booking-submit-fallback" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
+                                <button type="submit" class="btn btn-primary btn-full booking-submit-btn" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>
                             </div>
                             <p class="booking-disclaimer">Si tienes dudas, también puedes continuar por WhatsApp.</p>
