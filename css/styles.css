@@ -1289,10 +1289,11 @@ body.booking-mode-mobile .booking-submit-fallback {
 
 .faq-panel-dark {
     background:
-        radial-gradient(circle at top right, rgba(106, 125, 255, 0.22), transparent 30%),
-        linear-gradient(180deg, #1D63D7 0%, #1555C8 100%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 28px 50px rgba(21, 85, 200, 0.22);
+        radial-gradient(circle at top right, rgba(124, 98, 255, 0.18), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(72, 214, 228, 0.18), transparent 32%),
+        linear-gradient(180deg, #4DA8F0 0%, #5C8FF6 52%, #7A6EF4 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 24px 44px rgba(92, 143, 246, 0.2);
 }
 
 .faq-panel-heading {
@@ -1383,8 +1384,8 @@ body.booking-mode-mobile .booking-submit-fallback {
     border-radius: 20px;
     text-decoration: none;
     color: var(--text-main);
-    background: linear-gradient(135deg, rgba(37, 211, 102, 0.16), rgba(255, 255, 255, 0.98));
-    border: 1px solid rgba(37, 211, 102, 0.2);
+    background: linear-gradient(135deg, rgba(82, 234, 194, 0.14), rgba(255, 255, 255, 0.98));
+    border: 1px solid rgba(82, 234, 194, 0.26);
     box-shadow: var(--shadow-soft);
 }
 
@@ -1394,25 +1395,22 @@ body.booking-mode-mobile .booking-submit-fallback {
 }
 
 .faq-whatsapp-copy strong {
-    color: #166534;
-}
-
-.faq-whatsapp-copy span {
-    color: var(--text-muted);
-    font-size: 0.92rem;
+    color: #22655A;
 }
 
 .faq-whatsapp-action {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 112px;
-    min-height: 44px;
-    padding: 10px 16px;
+    min-width: 224px;
+    min-height: 48px;
+    padding: 12px 22px;
     border-radius: 999px;
-    background: #25D366;
+    background: #56D55E;
     color: var(--white);
     font-weight: 700;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(86, 213, 94, 0.24);
 }
 
 .booking-faq-compact {
