@@ -1176,10 +1176,6 @@ h2 {
     display: none;
 }
 
-.booking-popup-host.booking-popup-ready {
-    display: block;
-}
-
 .booking-popup-host button {
     width: 100%;
     min-height: 56px;
@@ -1198,20 +1194,12 @@ h2 {
     display: none;
 }
 
-.booking-submit-desktop-fallback {
-    display: none;
-}
-
-body.booking-mode-desktop .booking-popup-host.booking-popup-ready {
+body.booking-mode-desktop .booking-popup-host {
     display: block;
 }
 
 body.booking-mode-desktop .booking-submit-fallback {
     display: none;
-}
-
-body.booking-mode-desktop .booking-popup-host.booking-popup-empty + .booking-submit-desktop-fallback {
-    display: inline-flex;
 }
 
 body.booking-mode-mobile .booking-popup-host,

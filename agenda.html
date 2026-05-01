@@ -240,16 +240,24 @@
                                     <h3>Continuar a la reserva</h3>
                                 </div>
                                 <!--
-                                    Desktop: este contenedor debe mostrar el boton oficial inyectado por Google Calendar.
-                                    No reemplazarlo por un boton propio si se quiere conservar el popup oficial.
+                                    Desktop: usar el snippet oficial de Google Calendar en este lugar.
+                                    No reemplazar este bloque por un boton propio si se quiere conservar el popup oficial.
                                 -->
-                                <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
-                                <!--
-                                    Desktop fallback:
-                                    solo se muestra si Google no logra inyectar su boton oficial.
-                                    No reemplaza el flujo oficial; evita que el bloque quede vacio.
-                                -->
-                                <button type="button" class="btn btn-primary btn-full booking-submit-btn booking-submit-desktop-fallback" id="desktop-calendar-fallback-btn">Continuar a Google Calendar</button>
+                                <div class="booking-popup-host" aria-hidden="true">
+                                    <script>
+                                    (function() {
+                                      var target = document.currentScript;
+                                      window.addEventListener('load', function() {
+                                        calendar.schedulingButton.load({
+                                          url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ093-U5sI0xZaYQB2Lm0P-JtiJ_L2tcsTr6YFaS9R5cd5i26jh0dkR94ZKwmYroNIilFoiZhl14?gv=true',
+                                          color: '#039BE5',
+                                          label: 'Agendar una cita',
+                                          target,
+                                        });
+                                      });
+                                    })();
+                                    </script>
+                                </div>
                                 <!-- Movil: este boton propio funciona como fallback al link directo de Google Calendar. -->
                                 <button type="button" class="btn btn-primary btn-full booking-submit-btn booking-submit-fallback" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>

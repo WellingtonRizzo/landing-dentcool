@@ -129,58 +129,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // En desktop Google renderiza aqui su boton oficial. En movil no se usa popup para evitar doble CTA.
-    const initializeGoogleCalendarPopup = () => {
-        const popupHost = document.getElementById("google-calendar-popup-host");
-        if (!popupHost || !bookingPopupUrl || bookingModeQuery.matches) {
-            return null;
-        }
-
-        const loadPopupButton = () => {
-            if (!window.calendar || !window.calendar.schedulingButton || popupHost.dataset.loaded === "true") {
-                return;
-            }
-
-            window.calendar.schedulingButton.load({
-                url: bookingPopupUrl,
-                color: "#3F51B5",
-                label: "Continuar a Google Calendar",
-                target: popupHost
-            });
-
-            popupHost.dataset.loaded = "true";
-            popupHost.classList.add("booking-popup-ready");
-        };
-
-        loadPopupButton();
-
-        if (popupHost.dataset.loaded === "true") {
-            return popupHost;
-        }
-
-        let attempts = 0;
-        const poll = window.setInterval(() => {
-            attempts += 1;
-            loadPopupButton();
-
-            if (popupHost.dataset.loaded === "true" || attempts > 30) {
-                if (popupHost.dataset.loaded !== "true") {
-                    popupHost.classList.add("booking-popup-empty");
-                }
-                window.clearInterval(poll);
-            }
-        }, 300);
-
-        return popupHost;
-    };
-
     const initializeBookingRequest = () => {
         const form = document.getElementById("booking-request-form");
         if (!form) {
             return;
         }
 
-        const popupHost = initializeGoogleCalendarPopup();
         const serviceSelect = document.getElementById("service-select");
         const shiftSelect = document.getElementById("shift-select");
         const selectedDateField = document.getElementById("selected-date");
@@ -195,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const stageCalendar = document.getElementById("stage-calendar");
         const stageSlots = document.getElementById("stage-slots");
         const stageForm = document.getElementById("booking-request-form");
-        let popupBound = false;
         // Horarios locales conservados para una futura agenda propia dentro de la landing.
         const slotMap = {
             manana: ["09:30", "10:30", "11:30", "12:30"],
@@ -326,14 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return selectedOption && serviceSelect && serviceSelect.value ? selectedOption.text.trim() : "";
         };
 
-        const getPopupButton = () => {
-            if (!popupHost) {
-                return null;
-            }
-
-            return popupHost.querySelector("button");
-        };
-
         const notifyAndTrackBookingIntent = (serviceValue) => {
             const normalizedServiceValue = serviceValue || "Reserva general";
             const date = selectedDateField ? selectedDateField.value : "";
@@ -364,13 +309,6 @@ document.addEventListener("DOMContentLoaded", () => {
             shiftSelect.addEventListener("change", syncShiftSlots);
             syncShiftSlots();
         }
-
-        const popupPoll = window.setInterval(() => {
-            popupBound = Boolean(getPopupButton());
-            if (popupBound) {
-                window.clearInterval(popupPoll);
-            }
-        }, 300);
 
         [serviceSelect, shiftSelect, nameField, phoneField, emailField].forEach((field) => {
             if (!field) {
@@ -416,7 +354,6 @@ document.addEventListener("DOMContentLoaded", () => {
         syncProgressiveStages();
 
         const openCalendarButton = document.getElementById("submit-request-btn");
-        const desktopFallbackButton = document.getElementById("desktop-calendar-fallback-btn");
         const openGoogleCalendar = () => {
             const serviceValue = getSelectedServiceValue();
             notifyAndTrackBookingIntent(serviceValue);
@@ -429,25 +366,10 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         // Importante:
-        // - Desktop usa el boton oficial que Google inyecta dentro de popupHost.
+        // - Desktop usa el snippet oficial de Google Calendar escrito en agenda.html.
         // - Este listener queda solo para movil, donde usamos el link directo como fallback.
         if (openCalendarButton && bookingModeQuery.matches) {
             openCalendarButton.addEventListener("click", openGoogleCalendar);
-        }
-
-        if (desktopFallbackButton && !bookingModeQuery.matches) {
-            desktopFallbackButton.addEventListener("click", () => {
-                if (bookingPopupUrl) {
-                    window.open(
-                        bookingPopupUrl,
-                        "dentcoolGoogleCalendarFallback",
-                        "popup=yes,width=980,height=860,resizable=yes,scrollbars=yes"
-                    );
-                    return;
-                }
-
-                openGoogleCalendar();
-            });
         }
     };
 
