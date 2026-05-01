@@ -129,13 +129,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    const initializeGoogleCalendarButton = () => {
+        const isMobile = bookingModeQuery.matches;
+        const target = document.getElementById("google-calendar-button-root");
+        if (!target || isMobile || !bookingPopupUrl) {
+            return;
+        }
+
+        const loadButton = () => {
+            if (!window.calendar || !window.calendar.schedulingButton || target.dataset.loaded === "true") {
+                return;
+            }
+
+            window.calendar.schedulingButton.load({
+                url: bookingPopupUrl,
+                color: "#039BE5",
+                label: "Agendar una cita",
+                target
+            });
+
+            target.dataset.loaded = "true";
+        };
+
+        loadButton();
+
+        let attempts = 0;
+        const poll = window.setInterval(() => {
+            attempts += 1;
+            loadButton();
+
+            if (target.dataset.loaded === "true" || attempts > 30) {
+                window.clearInterval(poll);
+            }
+        }, 300);
+    };
+
     const initializeBookingRequest = () => {
         const form = document.getElementById("booking-request-form");
         if (!form) {
             return;
         }
-
-        const popupHost = document.querySelector(".booking-popup-host");
 
         const serviceSelect = document.getElementById("service-select");
         const shiftSelect = document.getElementById("shift-select");
@@ -312,34 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
             syncShiftSlots();
         }
 
-        const hardenGooglePopupButton = () => {
-            if (!popupHost) {
-                return;
-            }
-
-            const googleButton = popupHost.querySelector("button");
-            if (!googleButton) {
-                return;
-            }
-
-            // El boton oficial de Google se renderiza dentro del bloque de reserva.
-            // Forzamos type=button para evitar comportamiento accidental si Google usa <button>.
-            googleButton.setAttribute("type", "button");
-        };
-
-        if (popupHost && typeof MutationObserver === "function") {
-            const popupObserver = new MutationObserver(() => {
-                hardenGooglePopupButton();
-            });
-
-            popupObserver.observe(popupHost, {
-                childList: true,
-                subtree: true
-            });
-        }
-
-        hardenGooglePopupButton();
-
         [serviceSelect, shiftSelect, nameField, phoneField, emailField].forEach((field) => {
             if (!field) {
                 return;
@@ -397,5 +402,6 @@ document.addEventListener("DOMContentLoaded", () => {
     trackPageContext();
     trackClicks();
     applyServiceFromQuery();
+    initializeGoogleCalendarButton();
     initializeBookingRequest();
 });

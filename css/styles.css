@@ -1555,8 +1555,14 @@ body.booking-mode-pending .booking-submit-desktop-fallback {
         flex-wrap: nowrap;
     }
 
+    .nav-link {
+        display: none;
+    }
+
     .nav .btn {
         width: auto;
+        padding: 10px 16px;
+        font-size: 0.95rem;
     }
 
     .hero-section {
@@ -1597,6 +1603,10 @@ body.booking-mode-pending .booking-submit-desktop-fallback {
     .booking-main-card,
     .booking-info-card {
         padding: 24px 20px;
+    }
+
+    .agenda-hero {
+        padding-top: 18px;
     }
 
     .location-card {
