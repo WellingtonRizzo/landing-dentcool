@@ -129,12 +129,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const initializeGoogleCalendarButton = () => {
+    const initializeGoogleCalendarPopup = () => {
         const isMobile = bookingModeQuery.matches;
-        const target = document.getElementById("google-calendar-button-root");
+        const target = document.getElementById("google-calendar-popup-host");
         if (!target || isMobile || !bookingPopupUrl) {
             return;
         }
+
+        target.innerHTML = "";
+        target.dataset.loaded = "false";
+        target.classList.remove("booking-popup-ready");
+        target.setAttribute("aria-hidden", "true");
 
         const loadButton = () => {
             if (!window.calendar || !window.calendar.schedulingButton || target.dataset.loaded === "true") {
@@ -158,7 +163,16 @@ document.addEventListener("DOMContentLoaded", () => {
             attempts += 1;
             loadButton();
 
+            if (target.querySelector("button, a, iframe")) {
+                target.classList.add("booking-popup-ready");
+                target.setAttribute("aria-hidden", "false");
+            }
+
             if (target.dataset.loaded === "true" || attempts > 30) {
+                if (target.querySelector("button, a, iframe")) {
+                    target.classList.add("booking-popup-ready");
+                    target.setAttribute("aria-hidden", "false");
+                }
                 window.clearInterval(poll);
             }
         }, 300);
@@ -402,6 +416,6 @@ document.addEventListener("DOMContentLoaded", () => {
     trackPageContext();
     trackClicks();
     applyServiceFromQuery();
-    initializeGoogleCalendarButton();
+    initializeGoogleCalendarPopup();
     initializeBookingRequest();
 });
