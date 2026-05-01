@@ -1173,12 +1173,11 @@ h2 {
 }
 
 .booking-popup-host {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
+    display: none;
+}
+
+.booking-popup-host.booking-popup-ready {
+    display: block;
 }
 
 .booking-popup-host button {
@@ -1195,7 +1194,24 @@ h2 {
     cursor: pointer;
 }
 
-.booking-submit-btn {
+.booking-submit-fallback {
+    display: none;
+}
+
+body.booking-mode-desktop .booking-popup-host.booking-popup-ready {
+    display: block;
+}
+
+body.booking-mode-desktop .booking-submit-fallback {
+    display: none;
+}
+
+body.booking-mode-mobile .booking-popup-host,
+body.booking-mode-pending .booking-popup-host {
+    display: none !important;
+}
+
+body.booking-mode-mobile .booking-submit-fallback {
     display: inline-flex;
 }
 

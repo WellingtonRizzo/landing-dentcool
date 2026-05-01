@@ -417,26 +417,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const serviceValue = getSelectedServiceValue();
             notifyAndTrackBookingIntent(serviceValue);
 
-            if (!bookingModeQuery.matches) {
-                if (bookingPopupUrl) {
-                    const popupWindow = window.open(
-                        bookingPopupUrl,
-                        "dentcoolGoogleCalendar",
-                        "popup=yes,width=980,height=860,resizable=yes,scrollbars=yes"
-                    );
-
-                    if (popupWindow) {
-                        popupWindow.focus();
-                        return;
-                    }
-                }
-
-                if (bookingUrl) {
-                    window.location.href = bookingUrl;
-                    return;
-                }
-            }
-
             window.setTimeout(() => {
                 if (bookingUrl) {
                     window.location.href = bookingUrl;
@@ -444,7 +424,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 300);
         };
 
-        if (openCalendarButton) {
+        // Importante:
+        // - Desktop usa el boton oficial que Google inyecta dentro de popupHost.
+        // - Este listener queda solo para movil, donde usamos el link directo como fallback.
+        if (openCalendarButton && bookingModeQuery.matches) {
             openCalendarButton.addEventListener("click", openGoogleCalendar);
         }
     };
