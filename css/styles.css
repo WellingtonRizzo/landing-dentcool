@@ -890,6 +890,7 @@ h2 {
 .booking-visual-panel {
     display: grid;
     gap: 20px;
+    align-content: start;
 }
 
 .stage-heading {
@@ -1275,73 +1276,80 @@ body.booking-mode-mobile .booking-submit-fallback {
     grid-column: 1 / -1;
 }
 
-.agenda-faq-section {
-    padding: 0 0 72px;
+.faq-section {
+    padding: 0 0 56px;
 }
 
-.agenda-faq-shell {
+.faq-panel {
     position: relative;
     overflow: hidden;
     padding: 34px;
     border-radius: 28px;
+}
+
+.faq-panel-dark {
     background:
-        radial-gradient(circle at top right, rgba(123, 77, 255, 0.16), transparent 34%),
-        radial-gradient(circle at bottom left, rgba(0, 188, 212, 0.16), transparent 32%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 249, 255, 0.96));
-    border: 1px solid rgba(123, 77, 255, 0.1);
-    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08);
+        radial-gradient(circle at top right, rgba(106, 125, 255, 0.22), transparent 30%),
+        linear-gradient(180deg, #1D63D7 0%, #1555C8 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 28px 50px rgba(21, 85, 200, 0.22);
 }
 
-.agenda-faq-heading {
+.faq-panel-heading {
     max-width: 720px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
-.agenda-faq-heading p {
-    color: var(--text-muted);
+.faq-panel-heading h2,
+.faq-panel-heading h3 {
+    margin: 0;
+    color: var(--white);
 }
 
-.agenda-faq-grid {
+.faq-panel-heading p {
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.faq-panel-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.faq-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 12px;
 }
 
-.faq-card {
-    background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(123, 77, 255, 0.1);
-    border-radius: 22px;
-    padding: 18px 20px;
-    box-shadow: var(--shadow-soft);
-    transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+.faq-item {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 0 18px;
 }
 
-.faq-card[open] {
-    border-color: rgba(0, 188, 212, 0.22);
-    box-shadow: 0 18px 32px rgba(15, 23, 42, 0.08);
-}
-
-.faq-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.faq-card summary {
+.faq-item summary {
     list-style: none;
+    min-height: 68px;
     cursor: pointer;
     font-weight: 700;
-    color: var(--text-main);
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
 }
 
-.faq-card summary::-webkit-details-marker {
+.faq-item summary::-webkit-details-marker {
     display: none;
 }
 
-.faq-card summary::after {
+.faq-item summary::after {
     content: "+";
     display: inline-flex;
     align-items: center;
@@ -1349,21 +1357,78 @@ body.booking-mode-mobile .booking-submit-fallback {
     width: 32px;
     height: 32px;
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(0, 188, 212, 0.14), rgba(123, 77, 255, 0.16));
-    color: var(--primary-purple);
-    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    font-size: 1.15rem;
     font-weight: 800;
     flex-shrink: 0;
 }
 
-.faq-card[open] summary::after {
+.faq-item[open] summary::after {
     content: "−";
 }
 
-.faq-card p {
-    margin-top: 14px;
-    color: var(--text-muted);
+.faq-item p {
+    margin: 0 0 18px;
+    color: rgba(255, 255, 255, 0.82);
     line-height: 1.7;
+}
+
+.faq-whatsapp-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--text-main);
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.16), rgba(255, 255, 255, 0.98));
+    border: 1px solid rgba(37, 211, 102, 0.2);
+    box-shadow: var(--shadow-soft);
+}
+
+.faq-whatsapp-copy {
+    display: grid;
+    gap: 4px;
+}
+
+.faq-whatsapp-copy strong {
+    color: #166534;
+}
+
+.faq-whatsapp-copy span {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.faq-whatsapp-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 112px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #25D366;
+    color: var(--white);
+    font-weight: 700;
+}
+
+.booking-faq-compact {
+    padding: 22px;
+}
+
+.booking-faq-compact .faq-panel-heading {
+    margin-bottom: 14px;
+}
+
+.booking-faq-compact .faq-panel-heading h3 {
+    font-size: 1.5rem;
+}
+
+.booking-faq-compact .faq-item summary {
+    min-height: 60px;
 }
 
 /* ==========================================================================
@@ -1566,10 +1631,6 @@ body.booking-mode-mobile .booking-submit-fallback {
         display: inline-flex;
     }
 
-    .agenda-faq-grid {
-        grid-template-columns: 1fr;
-    }
-
     .location-actions {
         margin-top: 2px;
     }
@@ -1622,14 +1683,23 @@ body.booking-mode-mobile .booking-submit-fallback {
         grid-template-columns: 1fr;
     }
 
-    .agenda-faq-shell {
+    .faq-panel,
+    .booking-faq-compact {
         padding: 24px 18px;
         border-radius: 24px;
     }
 
-    .faq-card {
-        border-radius: 20px;
-        padding: 16px;
+    .faq-whatsapp-bar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .faq-whatsapp-action {
+        width: 100%;
+    }
+
+    .faq-item {
+        padding: 0 14px;
     }
 
     .cal-days,
