@@ -33,9 +33,10 @@ La página pública no debe mostrar lenguaje interno como:
 1. El paciente entra desde anuncio o enlace directo.
 2. Revisa tratamientos o packs.
 3. Pasa a la agenda.
-4. Elige fecha, jornada y horario.
-5. Deja sus datos.
-6. El negocio confirma la reserva por el canal definido.
+4. Elige tratamiento, fecha y horario de referencia.
+5. Deja sus datos en la interfaz de DentCool.
+6. Confirma la reserva real en Google Calendar.
+7. Recibe confirmación por correo y la cita queda guardada en el calendario del negocio.
 
 ## Estado actual
 
@@ -43,15 +44,18 @@ La página pública no debe mostrar lenguaje interno como:
 - La agenda tiene mejor UI y flujo más claro.
 - WhatsApp sigue como canal de apoyo.
 - El tracking en JavaScript es defensivo y no rompe si Pixel no existe.
-- No hay integración real de reserva automática todavía.
+- Ya existe integración real con Google Calendar Appointment Schedule.
+- En desktop la reserva abre mediante popup oficial de Google Calendar.
+- En móvil la reserva usa fallback al link normal de Google Calendar.
+- El tratamiento o pack de interés se está guardando en los detalles del evento.
 
 ## Pendientes para siguiente etapa
 
 - Reemplazar el número de WhatsApp placeholder.
 - Instalar Pixel real.
-- Integrar agenda real con Calendly o Google Appointment Schedule.
 - Validar mobile en navegador real.
-- Definir si el cierre será por embed o por redirección.
+- Revisar si conviene simplificar la preselección local antes del popup.
+- Ajustar disponibilidad futura cuando el negocio opere desde la tarde entre semana.
 
 ## Criterio de copy
 
@@ -71,5 +75,27 @@ Debe evitar:
 
 ## Nota sobre agenda real
 
-La agenda actual sirve para presentar horarios y recoger intención.
-Cuando integremos una agenda real, la recomendación inicial es evaluar una redirección simple o un embed según la experiencia que quieras priorizar.
+La agenda actual ya usa Google Calendar como motor de reserva real.
+
+Puntos importantes:
+
+- El popup final de Google no muestra todos los campos personalizados en su resumen.
+- El dato `Tratamiento o pack de interés` sí queda guardado en los detalles del evento dentro del calendario de DentCool.
+- El recordatorio visible de `30 minutos antes` no parece configurable a `15 minutos` con la cuenta/plan actual.
+
+## Checklist de continuidad
+
+### Hecho
+
+- [x] Landing online en Vercel.
+- [x] Agenda real conectada a Google Calendar.
+- [x] Popup desktop funcionando.
+- [x] Fallback móvil definido.
+- [x] Tratamiento de interés guardándose en el evento.
+
+### Falta
+
+- [ ] WhatsApp real.
+- [ ] Pixel real.
+- [ ] Prueba completa en celular.
+- [ ] Afinar futuros horarios operativos.
