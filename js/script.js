@@ -122,11 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
             window.calendar.schedulingButton.load({
                 url: bookingPopupUrl,
                 color: "#3F51B5",
-                label: "Reservar una cita",
+                label: "Continuar a Google Calendar",
                 target: popupHost
             });
 
             popupHost.dataset.loaded = "true";
+            popupHost.classList.add("booking-popup-ready");
         };
 
         loadPopupButton();
@@ -169,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const stageCalendar = document.getElementById("stage-calendar");
         const stageSlots = document.getElementById("stage-slots");
         const stageForm = document.getElementById("booking-request-form");
+        let popupBound = false;
         const slotMap = {
             manana: ["09:30", "10:30", "11:30", "12:30"],
             tarde: ["13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30"]
@@ -288,10 +290,77 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
+        const getSelectedServiceValue = () => {
+            const selectedOption = serviceSelect ? serviceSelect.options[serviceSelect.selectedIndex] : null;
+            return selectedOption && serviceSelect && serviceSelect.value ? selectedOption.text.trim() : "";
+        };
+
+        const bindPopupValidation = () => {
+            if (!popupHost || popupBound) {
+                return;
+            }
+
+            const popupButton = popupHost.querySelector("button");
+            if (!popupButton) {
+                return;
+            }
+
+            popupBound = true;
+            popupButton.addEventListener("click", (event) => {
+                const serviceValue = getSelectedServiceValue();
+
+                if (!serviceValue) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    if (message) {
+                        message.textContent = "Selecciona un tratamiento o pack antes de continuar.";
+                        message.className = "form-message";
+                    }
+                    return;
+                }
+
+                if (!form.reportValidity()) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    return;
+                }
+
+                const date = selectedDateField ? selectedDateField.value : "";
+                const slot = selectedSlotField ? selectedSlotField.value : "";
+
+                if (message) {
+                    message.textContent = `Todo listo. Abriremos Google Calendar para confirmar ${serviceValue} el ${date} a las ${slot}.`;
+                    message.className = "form-message success";
+                }
+
+                safeTrack("booking_request_submitted", {
+                    service_name: serviceValue,
+                    shift_name: shiftSelect ? shiftSelect.value : "",
+                    preferred_date: date,
+                    preferred_time: slot,
+                    patient_name: nameField ? nameField.value.trim() : "",
+                    page_name: document.body.dataset.page || "agenda"
+                });
+
+                if (typeof window.fbq === "function") {
+                    window.fbq("track", "Lead", {
+                        content_name: serviceValue
+                    });
+                }
+            }, true);
+        };
+
         if (shiftSelect) {
             shiftSelect.addEventListener("change", syncShiftSlots);
             syncShiftSlots();
         }
+
+        const popupPoll = window.setInterval(() => {
+            bindPopupValidation();
+            if (popupBound) {
+                window.clearInterval(popupPoll);
+            }
+        }, 300);
 
         [serviceSelect, shiftSelect, nameField, phoneField, emailField].forEach((field) => {
             if (!field) {
@@ -339,8 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
 
-            const selectedOption = serviceSelect ? serviceSelect.options[serviceSelect.selectedIndex] : null;
-            const serviceValue = selectedOption && serviceSelect && serviceSelect.value ? selectedOption.text.trim() : "";
+            const serviceValue = getSelectedServiceValue();
             if (!serviceValue) {
                 if (message) {
                     message.textContent = "Selecciona un tratamiento o pack antes de enviar la solicitud.";
@@ -371,14 +439,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.fbq("track", "Lead", {
                     content_name: serviceValue
                 });
-            }
-
-            const useMobileFallback = window.matchMedia("(max-width: 768px)").matches;
-            const popupButton = popupHost ? popupHost.querySelector("button") : null;
-
-            if (!useMobileFallback && popupButton) {
-                popupButton.click();
-                return;
             }
 
             window.setTimeout(() => {

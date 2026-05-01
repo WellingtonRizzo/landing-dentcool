@@ -193,7 +193,8 @@
                                     <span class="stage-badge">5</span>
                                     <h3>Continuar a la reserva</h3>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-full booking-submit-btn" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
+                                <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
+                                <button type="submit" class="btn btn-primary btn-full booking-submit-btn booking-submit-fallback" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>
                             </div>
                             <p class="booking-disclaimer">Si tienes dudas, también puedes continuar por WhatsApp.</p>
@@ -208,9 +209,6 @@
     <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20un%20tratamiento%20o%20pack%20dental%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Hablar por WhatsApp" data-track="whatsapp_click" data-track-label="agenda_floating_whatsapp">
         <img src="whatsapp-symbol-logo-svgrepo-com.svg" alt="WhatsApp" class="whatsapp-icon">
     </a>
-
-    <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
-
     <script src="js/script.js"></script>
 </body>
 </html>
