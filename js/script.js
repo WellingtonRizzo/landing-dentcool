@@ -373,19 +373,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
+            const useMobileFallback = window.matchMedia("(max-width: 768px)").matches;
+            const popupButton = popupHost ? popupHost.querySelector("button") : null;
+
+            if (!useMobileFallback && popupButton) {
+                popupButton.click();
+                return;
+            }
+
             window.setTimeout(() => {
-                const useMobileFallback = window.matchMedia("(max-width: 768px)").matches;
-                const popupButton = popupHost ? popupHost.querySelector("button") : null;
-
-                if (!useMobileFallback && popupButton) {
-                    popupButton.click();
-                    return;
-                }
-
                 if (bookingUrl) {
                     window.location.href = bookingUrl;
                 }
-            }, 700);
+            }, 500);
         });
     };
 
