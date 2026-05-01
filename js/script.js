@@ -164,6 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
             loadPopupButton();
 
             if (popupHost.dataset.loaded === "true" || attempts > 30) {
+                if (popupHost.dataset.loaded !== "true") {
+                    popupHost.classList.add("booking-popup-empty");
+                }
                 window.clearInterval(poll);
             }
         }, 300);
@@ -413,6 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
         syncProgressiveStages();
 
         const openCalendarButton = document.getElementById("submit-request-btn");
+        const desktopFallbackButton = document.getElementById("desktop-calendar-fallback-btn");
         const openGoogleCalendar = () => {
             const serviceValue = getSelectedServiceValue();
             notifyAndTrackBookingIntent(serviceValue);
@@ -429,6 +433,21 @@ document.addEventListener("DOMContentLoaded", () => {
         // - Este listener queda solo para movil, donde usamos el link directo como fallback.
         if (openCalendarButton && bookingModeQuery.matches) {
             openCalendarButton.addEventListener("click", openGoogleCalendar);
+        }
+
+        if (desktopFallbackButton && !bookingModeQuery.matches) {
+            desktopFallbackButton.addEventListener("click", () => {
+                if (bookingPopupUrl) {
+                    window.open(
+                        bookingPopupUrl,
+                        "dentcoolGoogleCalendarFallback",
+                        "popup=yes,width=980,height=860,resizable=yes,scrollbars=yes"
+                    );
+                    return;
+                }
+
+                openGoogleCalendar();
+            });
         }
     };
 

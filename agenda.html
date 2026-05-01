@@ -221,15 +221,15 @@
                                     <input type="email" id="patient-email" name="email" placeholder="Ej. nombre@email.com">
                                 </label>
                                 <!-- Campos locales reservados para futura agenda propia desde la pagina. -->
-                                <label class="booking-field booking-field-future-hidden" aria-hidden="true">
+                                <label class="booking-field booking-field-future-hidden" aria-hidden="true" hidden>
                                     <span>Fecha preferida</span>
                                     <input type="text" id="selected-date" name="selected_date" value="2026-05-04" readonly>
                                 </label>
-                                <label class="booking-field booking-field-future-hidden" aria-hidden="true">
+                                <label class="booking-field booking-field-future-hidden" aria-hidden="true" hidden>
                                     <span>Horario preferido</span>
                                     <input type="text" id="selected-slot" name="selected_slot" value="09:30" readonly>
                                 </label>
-                                <label class="booking-field booking-field-full booking-field-future-hidden" aria-hidden="true">
+                                <label class="booking-field booking-field-full booking-field-future-hidden" aria-hidden="true" hidden>
                                     <span>Comentario o necesidad</span>
                                     <textarea id="patient-notes" name="notes" rows="4" placeholder="Ej. Quiero revisar pack sonrisa o confirmar si califico para blanqueamiento." spellcheck="true" autocapitalize="sentences"></textarea>
                                 </label>
@@ -244,6 +244,12 @@
                                     No reemplazarlo por un boton propio si se quiere conservar el popup oficial.
                                 -->
                                 <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
+                                <!--
+                                    Desktop fallback:
+                                    solo se muestra si Google no logra inyectar su boton oficial.
+                                    No reemplaza el flujo oficial; evita que el bloque quede vacio.
+                                -->
+                                <button type="button" class="btn btn-primary btn-full booking-submit-btn booking-submit-desktop-fallback" id="desktop-calendar-fallback-btn">Continuar a Google Calendar</button>
                                 <!-- Movil: este boton propio funciona como fallback al link directo de Google Calendar. -->
                                 <button type="button" class="btn btn-primary btn-full booking-submit-btn booking-submit-fallback" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>

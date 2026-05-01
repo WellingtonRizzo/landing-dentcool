@@ -1198,12 +1198,20 @@ h2 {
     display: none;
 }
 
+.booking-submit-desktop-fallback {
+    display: none;
+}
+
 body.booking-mode-desktop .booking-popup-host.booking-popup-ready {
     display: block;
 }
 
 body.booking-mode-desktop .booking-submit-fallback {
     display: none;
+}
+
+body.booking-mode-desktop .booking-popup-host.booking-popup-empty + .booking-submit-desktop-fallback {
+    display: inline-flex;
 }
 
 body.booking-mode-mobile .booking-popup-host,
@@ -1213,6 +1221,11 @@ body.booking-mode-pending .booking-popup-host {
 
 body.booking-mode-mobile .booking-submit-fallback {
     display: inline-flex;
+}
+
+body.booking-mode-mobile .booking-submit-desktop-fallback,
+body.booking-mode-pending .booking-submit-desktop-fallback {
+    display: none !important;
 }
 
 .booking-form-card {
