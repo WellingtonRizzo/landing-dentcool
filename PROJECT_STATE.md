@@ -11,6 +11,11 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - `css/styles.css`: estilos base y responsive.
 - `js/script.js`: interacciones y tracking seguro.
 
+## Regla de continuidad
+
+- Al cerrar cada jornada de trabajo se debe actualizar este archivo y dejar registro del avance del día.
+- Además, se debe registrar en la bitácora personal los desafíos, dudas, problemas detectados, soluciones aplicadas y aprendizajes.
+
 ## Decisiones tomadas
 
 - La agenda falsa con horarios mock fue eliminada.
