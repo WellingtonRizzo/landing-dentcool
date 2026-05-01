@@ -1166,6 +1166,15 @@ h2 {
     margin-top: 14px;
 }
 
+.booking-popup-host {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
 .booking-form-card {
     position: sticky;
     top: 136px;

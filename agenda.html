@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda tu hora | DentCool</title>
     <meta name="description" content="Revisa tratamientos y horarios disponibles en DentCool. Completa tus datos para reservar tu hora.">
+    <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 </head>
-<body data-page="agenda" data-booking-url="https://calendar.app.google/t4SYc3LSs9vQNMop7">
+<body
+    data-page="agenda"
+    data-booking-url="https://calendar.app.google/t4SYc3LSs9vQNMop7"
+    data-booking-popup-url="https://calendar.google.com/calendar/appointments/schedules/AcZssZ093-U5sI0xZaYQB2Lm0P-JtiJ_L2tcsTr6YFaS9R5cd5i26jh0dkR94ZKwmYroNIilFoiZhl14?gv=true">
     <header class="header">
         <div class="container header-container">
             <div class="logo">
@@ -33,12 +38,12 @@
                     <h1>Elige tu tratamiento y revisa horarios disponibles.</h1>
                     <div class="agenda-hero-signals">
                         <span class="agenda-signal">Reserva en pocos pasos</span>
-                        <span class="agenda-signal">Horarios de mañana y tarde</span>
+                        <span class="agenda-signal">Citas de 60 minutos</span>
                         <span class="agenda-signal">Atención en Ñuñoa</span>
                     </div>
                     <ul class="agenda-list">
                         <li>Limpiezas, blanqueamiento, restauraciones y packs.</li>
-                        <li>Elige el horario que más te acomode.</li>
+                        <li>Horarios disponibles de lunes a sábado.</li>
                         <li>Si tienes dudas, escríbenos por WhatsApp.</li>
                     </ul>
                 </div>
@@ -53,7 +58,7 @@
                     <p class="booking-intro">Selecciona tratamiento, fecha, horario y completa tus datos para pasar a la reserva.</p>
                     <div class="booking-live-summary" aria-live="polite">
                         <span class="booking-live-label">Importante</span>
-                        <p>Después de este paso te llevaremos a la agenda real para confirmar tu hora.</p>
+                        <p>Después de este paso te llevaremos a la agenda real para confirmar tu cita de 60 minutos.</p>
                     </div>
 
                     <div class="booking-request-grid">
@@ -136,7 +141,7 @@
                                     <span class="stage-badge">3</span>
                                     <h3>Elige tu horario</h3>
                                 </div>
-                                <p class="stage-helper">Elige el horario que prefieres.</p>
+                                <p class="stage-helper">Elige el horario que prefieres para tu cita de 60 minutos.</p>
                                 <div class="booking-shift-box">
                                     <label class="booking-field">
                                         <span>Jornada</span>
@@ -191,6 +196,7 @@
                                 <button type="submit" class="btn btn-primary btn-full booking-submit-btn" id="submit-request-btn" data-track="booking_request_submit" data-track-label="agenda_request_submit">Continuar a Google Calendar</button>
                                 <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20coordinar%20mi%20reserva%20en%20DentCool." target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-full" data-track="whatsapp_click" data-track-label="agenda_form_whatsapp">Continuar por WhatsApp</a>
                             </div>
+                            <div id="google-calendar-popup-host" class="booking-popup-host" aria-hidden="true"></div>
                             <p class="booking-disclaimer">Si tienes dudas, también puedes continuar por WhatsApp.</p>
                             <div id="booking-request-message" class="form-message"></div>
                         </form>

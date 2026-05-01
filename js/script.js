@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const bookingUrl = document.body.dataset.bookingUrl || "";
+    const bookingPopupUrl = document.body.dataset.bookingPopupUrl || "";
+
     const header = document.querySelector(".header");
 
     if (header) {
@@ -97,12 +100,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const readable = service.replace(/-/g, " ");
         if (intro) {
-            intro.textContent = `Servicio consultado: ${readable}. Selecciona fecha, horario y completa tus datos para coordinar tu reserva.`;
+            intro.textContent = `Servicio consultado: ${readable}. Selecciona fecha, horario y completa tus datos para continuar a la reserva.`;
         }
 
         if (serviceSelect) {
             serviceSelect.value = service;
         }
+    };
+
+    const initializeGoogleCalendarPopup = () => {
+        const popupHost = document.getElementById("google-calendar-popup-host");
+        if (!popupHost || !bookingPopupUrl) {
+            return null;
+        }
+
+        const loadPopupButton = () => {
+            if (!window.calendar || !window.calendar.schedulingButton || popupHost.dataset.loaded === "true") {
+                return;
+            }
+
+            window.calendar.schedulingButton.load({
+                url: bookingPopupUrl,
+                color: "#3F51B5",
+                label: "Reservar una cita",
+                target: popupHost
+            });
+
+            popupHost.dataset.loaded = "true";
+        };
+
+        loadPopupButton();
+
+        if (popupHost.dataset.loaded === "true") {
+            return popupHost;
+        }
+
+        let attempts = 0;
+        const poll = window.setInterval(() => {
+            attempts += 1;
+            loadPopupButton();
+
+            if (popupHost.dataset.loaded === "true" || attempts > 30) {
+                window.clearInterval(poll);
+            }
+        }, 300);
+
+        return popupHost;
     };
 
     const initializeBookingRequest = () => {
@@ -111,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const bookingUrl = document.body.dataset.bookingUrl || "";
+        const popupHost = initializeGoogleCalendarPopup();
         const serviceSelect = document.getElementById("service-select");
         const shiftSelect = document.getElementById("shift-select");
         const selectedDateField = document.getElementById("selected-date");
@@ -216,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button type="button" class="time-slot${index === 0 ? " active" : ""}" data-slot="${slot}">
                     <div>
                         <span class="slot-time">${slot}</span>
-                        <span class="slot-duration">30 minutos</span>
+                        <span class="slot-duration">60 minutos</span>
                     </div>
                     <span class="slot-status">${index === 0 ? "Preferido" : "Disponible"}</span>
                 </button>
@@ -330,11 +373,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
-            if (bookingUrl) {
-                window.setTimeout(() => {
+            window.setTimeout(() => {
+                const useMobileFallback = window.matchMedia("(max-width: 768px)").matches;
+                const popupButton = popupHost ? popupHost.querySelector("button") : null;
+
+                if (!useMobileFallback && popupButton) {
+                    popupButton.click();
+                    return;
+                }
+
+                if (bookingUrl) {
                     window.location.href = bookingUrl;
-                }, 700);
-            }
+                }
+            }, 700);
         });
     };
 
