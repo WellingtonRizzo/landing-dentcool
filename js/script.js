@@ -408,6 +408,11 @@ document.addEventListener("DOMContentLoaded", () => {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
 
+            const useMobileFallback = window.matchMedia("(max-width: 768px)").matches;
+            if (!useMobileFallback) {
+                return;
+            }
+
             const serviceValue = getSelectedServiceValue();
             if (!serviceValue) {
                 if (message) {
