@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const bookingUrl = document.body.dataset.bookingUrl || "";
         const serviceSelect = document.getElementById("service-select");
         const shiftSelect = document.getElementById("shift-select");
         const selectedDateField = document.getElementById("selected-date");
@@ -310,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const slot = selectedSlotField ? selectedSlotField.value : "";
 
             if (message) {
-                message.textContent = `Recibimos tu solicitud para ${serviceValue} el ${date} a las ${slot}. Te contactaremos para confirmar tu reserva.`;
+                message.textContent = `Todo listo. Te llevaremos a Google Calendar para confirmar ${serviceValue} el ${date} a las ${slot}.`;
                 message.className = "form-message success";
             }
 
@@ -327,6 +328,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.fbq("track", "Lead", {
                     content_name: serviceValue
                 });
+            }
+
+            if (bookingUrl) {
+                window.setTimeout(() => {
+                    window.location.href = bookingUrl;
+                }, 700);
             }
         });
     };
