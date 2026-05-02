@@ -21,6 +21,19 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
   - no tocar el flujo de Google Calendar en desktop sin validar primero contra esta versión protegida
   - no volver a poner comentarios dentro de etiquetas HTML como `<body ...>`
 
+## Versión visual publicada hoy
+
+- Commit visual aprobado y publicado: `3697621`
+- Estado de esta versión:
+  - home con fondo clínico suave aprobado
+  - bloque de ubicación mejorado con referencia visual de Metro Chile España
+  - agenda con fondo suave aprobado usando `pexels-fondo-31786502.jpg`
+  - versión móvil de ubicación ajustada para mostrar la foto debajo del texto de cercanía
+  - flujo de Google Calendar mantenido sin cambios funcionales
+- Regla de seguridad para esta versión:
+  - no reemplazar las imágenes aprobadas sin revisar primero home y agenda en desktop y móvil
+  - no mezclar assets de prueba o descartados con la versión publicada
+
 ## Archivos principales
 
 - `index.html`: landing principal.
@@ -134,6 +147,9 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - El tratamiento elegido sí aparece en los detalles del evento dentro del calendario de DentCool.
 - FAQ visual agregada para aclarar reserva, duración, WhatsApp y evaluación.
 - FAQ en home y FAQ compacta en agenda ya forman parte de la versión base protegida.
+- Home con fondo clínico suave aprobado y publicado.
+- Sección de ubicación reforzada con referencia visual de Metro Chile España.
+- Agenda con fondo visual suave aprobado sin alterar el flujo de reserva.
 
 ### Qué se comprobó hoy
 
@@ -167,6 +183,11 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - [x] Campo `Tratamiento o pack de interés` guardándose en el evento.
 - [x] Corrector ortográfico activado en `Comentario o necesidad`.
 - [x] Sección FAQ agregada en la agenda.
+- [x] Fondo suave aprobado en la home.
+- [x] Fondo suave aprobado en la agenda.
+- [x] Referencia visual de Metro Chile España integrada en ubicación.
+- [x] Ajuste de ubicación revisado para móvil.
+- [x] Cambios visuales aprobados publicados en GitHub/Vercel con commit `3697621`.
 
 #### Falta
 
@@ -184,6 +205,30 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - La capa local de fecha/horario quedó guardada en código pero no visible al paciente.
 - Para cambios de disponibilidad, duración o campos de reserva, editar primero Google Calendar y luego alinear la UI local si hace falta.
 - Antes de tocar de nuevo `agenda.html`, `css/styles.css` o `js/script.js` en la zona de reserva, comparar contra `version-faq-estable`.
+- Para cambios visuales, comparar también contra el commit publicado `3697621`.
+
+### Checklist de hoy 2026-05-01
+
+#### Hecho hoy
+
+- [x] Se corrigió definitivamente el HTML roto que afectaba móvil en `agenda.html`.
+- [x] Se restauró el host limpio del botón oficial de Google Calendar en desktop.
+- [x] Se mantuvo fallback móvil a Google Calendar sin romper el flujo estable.
+- [x] Se documentó y protegió la referencia `version-faq-estable`.
+- [x] Se probaron varias imágenes localmente sin publicarlas hasta aprobación.
+- [x] Se aprobó un fondo clínico suave para la home.
+- [x] Se aprobó una mejora visual en ubicación usando `metro_chile_espana-520x397.jpg`.
+- [x] Se aprobó un fondo suave para la agenda usando `pexels-fondo-31786502.jpg`.
+- [x] Se cuidó la versión móvil de ubicación para que la foto quede debajo del texto de cercanía.
+- [x] Se hizo push seguro a `main` sin incluir assets descartados.
+
+#### Pendiente siguiente
+
+- [ ] Cambiar todos los links `wa.me/56912345678` por el WhatsApp real.
+- [ ] Instalar Meta Pixel real en `index.html`.
+- [ ] Probar home y agenda en celular real después del deploy final.
+- [ ] Decidir si la agenda debe simplificar aún más los datos locales previos a Google Calendar.
+- [ ] Revisar más adelante si conviene otra imagen de fondo, pero sin tocar la versión aprobada mientras esté funcionando.
 
 ## Nota de continuidad 2026-04-30
 

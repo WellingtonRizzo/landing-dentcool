@@ -48,6 +48,9 @@ La página pública no debe mostrar lenguaje interno como:
 - En desktop la reserva abre mediante popup oficial de Google Calendar.
 - En móvil la reserva usa fallback al link normal de Google Calendar.
 - El tratamiento o pack de interés se está guardando en los detalles del evento.
+- La home ya tiene fondo visual suave aprobado.
+- La sección de ubicación ya incorpora una referencia visual de Metro Chile España.
+- La agenda ya tiene fondo suave aprobado sin afectar la reserva real.
 
 ## Pendientes para siguiente etapa
 
@@ -92,6 +95,9 @@ Puntos importantes:
 - [x] Popup desktop funcionando.
 - [x] Fallback móvil definido.
 - [x] Tratamiento de interés guardándose en el evento.
+- [x] Home con fondo suave aprobado.
+- [x] Ubicación reforzada con referencia visual de Metro Chile España.
+- [x] Agenda con fondo suave aprobado.
 
 ### Falta
 
