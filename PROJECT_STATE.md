@@ -59,18 +59,40 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 
 ## Pendiente próximo
 
-1. Reemplazar el número de WhatsApp placeholder por el número real.
-2. Instalar Meta Pixel real con ID definitivo.
-3. Validar la experiencia en móvil con navegador real.
-4. Decidir si la preselección local de tratamiento debe simplificarse más.
-5. Ajustar disponibilidad futura en Google Calendar cuando cambie el horario operativo.
+1. Instalar Meta Pixel real con ID definitivo.
+2. Validar la experiencia en móvil con navegador real.
+3. Decidir si la preselección local de tratamiento debe simplificarse más.
+4. Ajustar disponibilidad futura en Google Calendar cuando cambie el horario operativo.
 
 ## Riesgos
 
-- El número de WhatsApp actual es placeholder.
 - `Lead` en Pixel hoy está ligado al flujo local; debe revisarse cuando exista Pixel real.
 - El recordatorio visible de `30 minutos antes` en Google Calendar no parece editable con el plan actual desde la UI disponible.
 - El popup final de confirmación de Google no muestra el tratamiento elegido, aunque sí queda guardado en los detalles del evento.
+
+## Actualización 2026-05-03
+
+### Cambios realizados
+
+- Se reemplazaron todos los links de WhatsApp placeholder por el número real `+56 9 8363 3077`.
+- Se actualizó la documentación operativa para reflejar que WhatsApp ya quedó configurado.
+- Se eliminó el archivo `.zip` descartado del workspace para mantener limpio el proyecto.
+- Se actualizó el nombre visible de marca a `DentCool Consulta Dental` en home y agenda.
+- Se agregó un bloque de contacto en el footer con Instagram, Facebook y correo.
+- Se dejaron Facebook y correo como links directos, e Instagram como link público confirmado.
+
+### Estado revisado hoy
+
+- `index.html` y `agenda.html` siguen alineados con la versión visual aprobada y recibieron ajustes de branding, WhatsApp y enlaces de contacto.
+- `css/styles.css` sí se modificó hoy para ordenar el footer y escalar correctamente los íconos de redes/correo.
+- `js/script.js` no se modificó hoy; el tracking defensivo y la lógica de agenda permanecen como estaban en la última base estable.
+- `Clerk` y `Neon` siguen sin integración real; solo existen como notas de arquitectura y continuidad.
+
+### Pendiente siguiente
+
+- [ ] Instalar Meta Pixel real en `index.html`.
+- [ ] Probar home y agenda en celular real después del deploy final.
+- [ ] Decidir si la agenda debe simplificar aún más los datos locales previos a Google Calendar.
 
 ## Actualización 2026-04-30
 
@@ -187,11 +209,11 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - [x] Fondo suave aprobado en la agenda.
 - [x] Referencia visual de Metro Chile España integrada en ubicación.
 - [x] Ajuste de ubicación revisado para móvil.
+- [x] WhatsApp comercial actualizado a `+56 9 8363 3077`.
 - [x] Cambios visuales aprobados publicados en GitHub/Vercel con commit `3697621`.
 
 #### Falta
 
-- [ ] Reemplazar WhatsApp placeholder por el número real.
 - [ ] Instalar Meta Pixel real.
 - [ ] Validar el flujo completo en móvil real.
 - [ ] Decidir cuándo reactivar la preselección local si DentCool agenda directamente desde la página.
@@ -224,7 +246,6 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 
 #### Pendiente siguiente
 
-- [ ] Cambiar todos los links `wa.me/56912345678` por el WhatsApp real.
 - [ ] Instalar Meta Pixel real en `index.html`.
 - [ ] Probar home y agenda en celular real después del deploy final.
 - [ ] Decidir si la agenda debe simplificar aún más los datos locales previos a Google Calendar.
@@ -281,7 +302,7 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 
 ### Checklist de cuentas / servicios externos
 
-- [ ] WhatsApp real configurado.
+- [x] WhatsApp real configurado.
 - [ ] Meta Pixel real configurado.
 - [x] URL real de agenda externa configurada.
 - [ ] Deploy final en Vercel validado.

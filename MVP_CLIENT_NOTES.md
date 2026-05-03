@@ -54,7 +54,6 @@ La página pública no debe mostrar lenguaje interno como:
 
 ## Pendientes para siguiente etapa
 
-- Reemplazar el número de WhatsApp placeholder.
 - Instalar Pixel real.
 - Validar mobile en navegador real.
 - Revisar si conviene simplificar la preselección local antes del popup.
@@ -94,6 +93,7 @@ Puntos importantes:
 - [x] Agenda real conectada a Google Calendar.
 - [x] Popup desktop funcionando.
 - [x] Fallback móvil definido.
+- [x] WhatsApp comercial configurado con número real.
 - [x] Tratamiento de interés guardándose en el evento.
 - [x] Home con fondo suave aprobado.
 - [x] Ubicación reforzada con referencia visual de Metro Chile España.
@@ -101,7 +101,6 @@ Puntos importantes:
 
 ### Falta
 
-- [ ] WhatsApp real.
 - [ ] Pixel real.
 - [ ] Prueba completa en celular.
 - [ ] Afinar futuros horarios operativos.

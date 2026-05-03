@@ -58,7 +58,8 @@ DentCool es una Landing Page moderna y premium para una consulta dental. El obje
 
 ### WhatsApp
 - Los links de WhatsApp están en `index.html` y `agenda.html`.
-- Hoy usan un número placeholder y deben actualizarse todos juntos cuando exista el número real.
+- Número configurado actualmente: `+56 9 8363 3077`.
+- Si cambia más adelante, actualizar todos los links juntos para no mezclar destinos.
 
 ### Clerk
 - Hoy no está integrado.
