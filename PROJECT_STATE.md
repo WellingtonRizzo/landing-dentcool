@@ -94,6 +94,34 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - [ ] Probar home y agenda en celular real después del deploy final.
 - [ ] Decidir si la agenda debe simplificar aún más los datos locales previos a Google Calendar.
 
+## Actualización 2026-05-04
+
+### Cambios realizados
+
+- Se ajustaron los mensajes precargados de WhatsApp para priorizar evaluación dental e información general, sin abrir con packs.
+- Se simplificó el bloque superior de `agenda.html` para reducir texto repetido y alinear el copy con el flujo real.
+- Se agregó un CTA rápido `Ir directo a Google Calendar` en la agenda.
+- Se simplificó visualmente el formulario público de la agenda.
+- Se eliminaron del HTML público los campos futuros que no debían verse: fecha preferida, horario preferido y comentario.
+- Se compactó la tarjeta derecha de la agenda para evitar espacios vacíos innecesarios.
+- Se actualizó en `index.html` el bloque de pasos de reserva para alinearlo con el flujo actual: atención, datos y confirmación en Google Calendar.
+- Se ajustó el texto visible de Instagram en el footer a `Instagram: dentcool.ñuñoa`.
+
+### Estado revisado hoy
+
+- `agenda.html` quedó más corta, más clara y más consistente con una reserva que se confirma fuera de la landing.
+- `index.html` quedó alineado con el flujo real y ya no promete selección local de horario como si fuera el cierre final.
+- `css/styles.css` recibió ajustes de layout para compactar el formulario de la agenda y acompañar el nuevo CTA rápido.
+- `js/script.js` no cambió hoy.
+
+### Checklist para retomar mañana
+
+- [ ] Validar en Vercel que la agenda se vea compacta y sin espacios vacíos.
+- [ ] Probar desde celular real el CTA `Ir directo a Google Calendar`.
+- [ ] Decidir si el formulario debe quedarse con `Nombre`, `Teléfono`, `Correo` o si `Correo` pasa a opcional.
+- [ ] Definir arquitectura de eventos para Pixel antes de instalar el ID real.
+- [ ] Revisar si conviene mantener el CTA rápido a Google Calendar también en más zonas de la agenda o solo arriba.
+
 ## Actualización 2026-04-30
 
 ### Cambios realizados
