@@ -59,6 +59,13 @@ La página pública no debe mostrar lenguaje interno como:
 - Revisar si conviene simplificar la preselección local antes del popup.
 - Ajustar disponibilidad futura cuando el negocio opere desde la tarde entre semana.
 
+## Seguimiento Pixel 2026-05-06
+
+- La URL correcta publicada es `https://dentcool.vercel.app`
+- `PageView` ya se vio en Meta
+- `Contact` y `Lead` siguen pendientes de reconfirmación después de reforzar el tracking de salida
+- El ajuste actual intenta evitar pérdida de eventos al abrir WhatsApp o Google Calendar
+
 ## Criterio de copy
 
 La página del paciente debe sonar:

@@ -80,6 +80,9 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - Se reactivaron `Contact` y `Lead` en `js/script.js`.
 - Se mantuvo `Lead` solo en el paso fuerte hacia Google Calendar.
 - El evento custom `schedule_click` se mantuvo separado del `Lead`.
+- Se corrigió la documentación para usar el dominio real `https://dentcool.vercel.app`.
+- Se reforzó el tracking de salida para `Contact` y `Lead`, retrasando brevemente la navegación para dar tiempo al envío del evento.
+- Se centralizó el `Lead` en los CTA de Google Calendar para evitar diferencias entre hero, fallback móvil y flujo inferior.
 - Se creó documentación dedicada del Pixel en `docs/meta-pixel.md`.
 - Se actualizó la documentación operativa para reflejar el estado vigente del Pixel.
 
@@ -90,6 +93,10 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
   - `224cfcd` documentación y bitácora del Pixel
 - Rama publicada: `main`
 - Assets sueltos sin trackear siguen fuera del commit y no afectan el deploy
+- Desafío actual detectado:
+  - `PageView` sí aparece en Meta
+  - `Contact` y `Lead` todavía no quedaron confirmados en Meta tras las primeras pruebas
+  - la hipótesis principal es pérdida del evento al salir muy rápido hacia WhatsApp o Google Calendar y confusión por uso de URL antigua
 
 ### Pixel documentado
 
@@ -110,7 +117,7 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - [x] Documentar el Pixel y su estado actual
 - [x] Reactivar `Contact`
 - [x] Reactivar `Lead`
-- [ ] Confirmar que Vercel ya sirvió la versión nueva con eventos reactivados
+- [ ] Confirmar que Vercel ya sirvió la versión nueva con el refuerzo de tracking
 - [ ] Validar `Contact` en Meta Events Manager
 - [ ] Validar `Lead` en Meta Events Manager
 - [ ] Probar home y agenda en celular real
@@ -218,8 +225,8 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 
 ### URLs activas
 
-- Landing: `https://landing-dentcool.vercel.app`
-- Agenda: `https://landing-dentcool.vercel.app/agenda.html`
+- Landing: `https://dentcool.vercel.app/index.html`
+- Agenda: `https://dentcool.vercel.app/agenda.html`
 
 ### Configuración real confirmada
 

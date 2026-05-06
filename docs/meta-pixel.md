@@ -6,6 +6,7 @@
 - Estado actual: `PageView`, `Contact` y `Lead` activos
 - `schedule_click` se mantiene como evento custom existente del sitio
 - Commit base de instalacion del Pixel: `5e7f288`
+- Dominio correcto de prueba y producción actual: `https://dentcool.vercel.app`
 
 ## Dónde está instalado
 
@@ -18,8 +19,8 @@
 - Evento estándar `Contact`
 - Evento estándar `Lead`
 - Se dispara al cargar:
-  - `https://landing-dentcool.vercel.app`
-  - `https://landing-dentcool.vercel.app/agenda.html`
+  - `https://dentcool.vercel.app/index.html`
+  - `https://dentcool.vercel.app/agenda.html`
 
 ## Mapa de eventos
 
@@ -33,6 +34,25 @@
 - `Lead` quedó solo en el paso fuerte hacia Google Calendar
 - ya no se usa `Lead` en el clic inicial hacia agenda
 - el servicio elegido viaja en `Lead` como `content_name`
+
+## Desafío detectado el 2026-05-06
+
+- `PageView` sí aparecía en Meta
+- `Contact` y `Lead` no se veían con claridad en Meta después de las primeras pruebas
+- la documentación seguía mencionando un dominio viejo, lo que podía llevar a probar la URL equivocada
+
+## Ajuste aplicado
+
+- Se corrigió la documentación para usar `https://dentcool.vercel.app`
+- Se reforzó el envío de eventos en `js/script.js` para que `Contact` y `Lead` se manden antes de salir del sitio
+- `Lead` quedó centralizado en los CTA de Google Calendar mediante `booking_request_submit`
+- Se evitó duplicar `Lead` en el flujo local del formulario
+
+## Hipótesis principal
+
+- En pruebas reales, al salir muy rápido hacia WhatsApp o Google Calendar, el navegador puede cortar el envío del evento antes de terminar
+- Este riesgo es mayor en móviles, cambios de pestaña y apertura de apps externas
+- También conviene revisar pruebas con bloqueadores de anuncios desactivados
 
 ## Estado validado
 

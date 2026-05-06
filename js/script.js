@@ -79,13 +79,49 @@ document.addEventListener("DOMContentLoaded", () => {
         safeTrack("DentCoolPageView", { page_name: pageName });
     };
 
+    const getSelectedServiceLabel = () => {
+        const serviceSelect = document.getElementById("service-select");
+        const selectedOption = serviceSelect ? serviceSelect.options[serviceSelect.selectedIndex] : null;
+        return selectedOption && serviceSelect && serviceSelect.value ? selectedOption.text.trim() : "";
+    };
+
+    const trackMetaStandardEvent = (trackName, label) => {
+        if (typeof window.fbq !== "function") {
+            return;
+        }
+
+        if (trackName === "whatsapp_click") {
+            window.fbq("track", "Contact", {
+                content_name: label || "whatsapp"
+            });
+        }
+
+        if (trackName === "booking_request_submit") {
+            window.fbq("track", "Lead", {
+                content_name: getSelectedServiceLabel() || label || "Reserva general"
+            });
+        }
+    };
+
     // Todos los enlaces con data-track reportan eventos sin acoplar la UI a una plataforma especifica.
     const trackClicks = () => {
         document.querySelectorAll("[data-track]").forEach((element) => {
-            element.addEventListener("click", () => {
+            element.addEventListener("click", (event) => {
                 const trackName = element.dataset.track;
                 const label = element.dataset.trackLabel || "";
                 const href = element.getAttribute("href") || "";
+                const target = element.getAttribute("target") || "";
+                const isAnchorLink = element.tagName === "A" && href && !href.startsWith("#");
+                const shouldDelayExit = trackName === "whatsapp_click" || trackName === "booking_request_submit";
+                let deferredWindow = null;
+
+                if (isAnchorLink && shouldDelayExit) {
+                    event.preventDefault();
+
+                    if (target === "_blank") {
+                        deferredWindow = window.open("", "_blank", "noopener");
+                    }
+                }
 
                 safeTrack(trackName, {
                     label,
@@ -93,10 +129,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     page_name: document.body.dataset.page || "unknown"
                 });
 
-                if (trackName === "whatsapp_click" && typeof window.fbq === "function") {
-                    window.fbq("track", "Contact", {
-                        content_name: label || "whatsapp"
-                    });
+                trackMetaStandardEvent(trackName, label);
+
+                if (isAnchorLink && shouldDelayExit) {
+                    window.setTimeout(() => {
+                        if (deferredWindow && !deferredWindow.closed) {
+                            deferredWindow.location = href;
+                            return;
+                        }
+
+                        if (target === "_blank") {
+                            window.open(href, "_blank", "noopener");
+                            return;
+                        }
+
+                        window.location.href = href;
+                    }, 180);
                 }
 
             });
@@ -342,11 +390,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 page_name: document.body.dataset.page || "agenda"
             });
 
-            if (typeof window.fbq === "function") {
-                window.fbq("track", "Lead", {
-                    content_name: normalizedServiceValue
-                });
-            }
         };
 
         if (shiftSelect) {
