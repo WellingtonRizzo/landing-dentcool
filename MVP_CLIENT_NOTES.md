@@ -54,9 +54,8 @@ La página pública no debe mostrar lenguaje interno como:
 
 ## Pendientes para siguiente etapa
 
-- Validar `PageView` del Pixel real ya instalado.
+- Validar `Contact` y `Lead` del Pixel real ya instalado.
 - Validar mobile en navegador real.
-- Reactivar `Contact` y `Lead` después de validar `PageView`.
 - Revisar si conviene simplificar la preselección local antes del popup.
 - Ajustar disponibilidad futura cuando el negocio opere desde la tarde entre semana.
 
@@ -101,11 +100,12 @@ Puntos importantes:
 - [x] Agenda con fondo suave aprobado.
 - [x] Pixel real instalado con ID `2154763995097855`.
 - [x] `PageView` activo en home y agenda.
+- [x] `Contact` activo en clics de WhatsApp.
+- [x] `Lead` activo al pasar a Google Calendar.
 
 ### Falta
 
-- [ ] Confirmar `PageView` en Meta Events Manager.
-- [ ] Reactivar `Contact`.
-- [ ] Reactivar `Lead`.
+- [ ] Confirmar `Contact` en Meta Events Manager.
+- [ ] Confirmar `Lead` en Meta Events Manager.
 - [ ] Prueba completa en celular.
 - [ ] Afinar futuros horarios operativos.

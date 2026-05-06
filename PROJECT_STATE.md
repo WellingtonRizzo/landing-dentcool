@@ -59,14 +59,14 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 
 ## Pendiente próximo
 
-1. Validar en Meta que `PageView` ya está entrando desde la versión publicada.
+1. Validar en Meta que `Contact` y `Lead` ya están entrando desde la versión publicada.
 2. Validar la experiencia en móvil con navegador real.
-3. Decidir cuándo reactivar `Contact` y `Lead` en el Pixel.
+3. Revisar si conviene mantener o refinar el evento custom `schedule_click`.
 4. Ajustar disponibilidad futura en Google Calendar cuando cambie el horario operativo.
 
 ## Riesgos
 
-- Si se reactivan `Contact` y `Lead` antes de validar `PageView`, será más difícil aislar fallas de instalación.
+- Si Meta clasifica distinto algunos clics o demora en mostrarlos, conviene validar cada evento por separado en pruebas cortas.
 - El recordatorio visible de `30 minutos antes` en Google Calendar no parece editable con el plan actual desde la UI disponible.
 - El popup final de confirmación de Google no muestra el tratamiento elegido, aunque sí queda guardado en los detalles del evento.
 
@@ -76,16 +76,19 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 
 - Se instaló el Meta Pixel real con ID `2154763995097855`.
 - El snippet base del Pixel quedó activo en `index.html` y `agenda.html`.
-- Se dejó activa solo la medición de `PageView`.
-- `Contact` y `Lead` quedaron comentados temporalmente en `js/script.js` para validar primero la instalación base.
+- Se validó `PageView` en Meta Events Manager.
+- Se reactivaron `Contact` y `Lead` en `js/script.js`.
+- Se mantuvo `Lead` solo en el paso fuerte hacia Google Calendar.
+- El evento custom `schedule_click` se mantuvo separado del `Lead`.
 - Se creó documentación dedicada del Pixel en `docs/meta-pixel.md`.
-- Se hizo commit y push a GitHub para disparar deploy en Vercel.
+- Se actualizó la documentación operativa para reflejar el estado vigente del Pixel.
 
 ### Estado revisado hoy
 
-- Commit publicado: `5e7f288`
+- Commits publicados hoy:
+  - `5e7f288` instalación base del Pixel
+  - `224cfcd` documentación y bitácora del Pixel
 - Rama publicada: `main`
-- Estado git actual del código trackeado: limpio
 - Assets sueltos sin trackear siguen fuera del commit y no afectan el deploy
 
 ### Pixel documentado
@@ -93,21 +96,23 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 - Pixel ID: `2154763995097855`
 - Home: `PageView` activo
 - Agenda: `PageView` activo
-- `Contact`: pausado
-- `Lead`: pausado
+- `Contact`: activo en clics de WhatsApp
+- `Lead`: activo al avanzar a Google Calendar
+- `schedule_click`: activo como evento custom de interés inicial
 - Documento de referencia: `docs/meta-pixel.md`
 
 ### Checklist para retomar
 
 - [x] Instalar Pixel real
+- [x] Confirmar `PageView` en Meta Events Manager
 - [x] Publicar cambio en GitHub
 - [x] Enviar actualización a Vercel mediante push
-- [x] Dejar solo `PageView` activo para la primera prueba
 - [x] Documentar el Pixel y su estado actual
-- [ ] Confirmar en Meta Events Manager que entra `PageView`
-- [ ] Confirmar que Vercel ya sirvió la versión con commit `5e7f288`
-- [ ] Reactivar `Contact` después de validar `PageView`
-- [ ] Reactivar `Lead` después de validar `PageView`
+- [x] Reactivar `Contact`
+- [x] Reactivar `Lead`
+- [ ] Confirmar que Vercel ya sirvió la versión nueva con eventos reactivados
+- [ ] Validar `Contact` en Meta Events Manager
+- [ ] Validar `Lead` en Meta Events Manager
 - [ ] Probar home y agenda en celular real
 
 ## Actualización 2026-05-03

@@ -3,9 +3,9 @@
 ## Estado actual
 
 - Pixel ID activo: `2154763995097855`
-- Estado de prueba actual: solo `PageView` activo
-- `Contact` y `Lead` quedaron comentados temporalmente en `js/script.js`
-- Commit publicado para esta prueba: `5e7f288`
+- Estado actual: `PageView`, `Contact` y `Lead` activos
+- `schedule_click` se mantiene como evento custom existente del sitio
+- Commit base de instalacion del Pixel: `5e7f288`
 
 ## Dónde está instalado
 
@@ -15,37 +15,41 @@
 ## Qué está activo hoy
 
 - Evento estándar `PageView`
+- Evento estándar `Contact`
+- Evento estándar `Lead`
 - Se dispara al cargar:
   - `https://landing-dentcool.vercel.app`
   - `https://landing-dentcool.vercel.app/agenda.html`
 
-## Qué quedó pausado temporalmente
+## Mapa de eventos
 
-- `Contact` en clics de WhatsApp
-- `Lead` en el paso fuerte hacia Google Calendar
+- `PageView`: cuando una persona abre la home o la agenda
+- `Contact`: cuando una persona hace clic en un botón o enlace de WhatsApp
+- `Lead`: cuando una persona avanza al paso de Google Calendar desde la agenda
+- `schedule_click`: evento custom existente para medir clic inicial a agenda
 
-Estos eventos no se borraron. Solo quedaron comentados para validar primero la instalación base del Pixel.
+## Detalle del evento Lead
 
-## Dónde reactivar después
+- `Lead` quedó solo en el paso fuerte hacia Google Calendar
+- ya no se usa `Lead` en el clic inicial hacia agenda
+- el servicio elegido viaja en `Lead` como `content_name`
 
-- `Contact`: [js/script.js](/Users/usuario/Desktop/landing DentCool/js/script.js:96)
-- `Lead`: [js/script.js](/Users/usuario/Desktop/landing DentCool/js/script.js:347)
+## Estado validado
 
-## Razón de esta prueba
-
-Primero se valida que Meta reciba `PageView` correctamente desde la web publicada. Una vez confirmado en Events Manager o Pixel Helper, se pueden reactivar `Contact` y `Lead`.
+- `PageView` ya se observó llegando en Meta Events Manager
+- ahora corresponde validar `Contact` y `Lead`
 
 ## Checklist
 
 - [x] Pixel real instalado en home
 - [x] Pixel real instalado en agenda
 - [x] `PageView` activo
-- [x] `Contact` comentado temporalmente
-- [x] `Lead` comentado temporalmente
+- [x] `Contact` activo
+- [x] `Lead` activo
 - [x] Commit hecho
 - [x] Push a GitHub hecho
 - [x] Deploy enviado a Vercel por push a `main`
-- [ ] Validar `PageView` en Meta Events Manager
+- [x] Validar `PageView` en Meta Events Manager
 - [ ] Confirmar si el deploy de Vercel ya refleja esta versión
-- [ ] Reactivar `Contact`
-- [ ] Reactivar `Lead`
+- [ ] Validar `Contact` en Meta Events Manager
+- [ ] Validar `Lead` en Meta Events Manager
