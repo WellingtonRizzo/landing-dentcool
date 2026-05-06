@@ -59,16 +59,56 @@ Fase 1 del MVP comercial usando la landing existente como base, ya desplegada en
 
 ## Pendiente próximo
 
-1. Instalar Meta Pixel real con ID definitivo.
+1. Validar en Meta que `PageView` ya está entrando desde la versión publicada.
 2. Validar la experiencia en móvil con navegador real.
-3. Decidir si la preselección local de tratamiento debe simplificarse más.
+3. Decidir cuándo reactivar `Contact` y `Lead` en el Pixel.
 4. Ajustar disponibilidad futura en Google Calendar cuando cambie el horario operativo.
 
 ## Riesgos
 
-- `Lead` en Pixel hoy está ligado al flujo local; debe revisarse cuando exista Pixel real.
+- Si se reactivan `Contact` y `Lead` antes de validar `PageView`, será más difícil aislar fallas de instalación.
 - El recordatorio visible de `30 minutos antes` en Google Calendar no parece editable con el plan actual desde la UI disponible.
 - El popup final de confirmación de Google no muestra el tratamiento elegido, aunque sí queda guardado en los detalles del evento.
+
+## Actualización 2026-05-06
+
+### Cambios realizados
+
+- Se instaló el Meta Pixel real con ID `2154763995097855`.
+- El snippet base del Pixel quedó activo en `index.html` y `agenda.html`.
+- Se dejó activa solo la medición de `PageView`.
+- `Contact` y `Lead` quedaron comentados temporalmente en `js/script.js` para validar primero la instalación base.
+- Se creó documentación dedicada del Pixel en `docs/meta-pixel.md`.
+- Se hizo commit y push a GitHub para disparar deploy en Vercel.
+
+### Estado revisado hoy
+
+- Commit publicado: `5e7f288`
+- Rama publicada: `main`
+- Estado git actual del código trackeado: limpio
+- Assets sueltos sin trackear siguen fuera del commit y no afectan el deploy
+
+### Pixel documentado
+
+- Pixel ID: `2154763995097855`
+- Home: `PageView` activo
+- Agenda: `PageView` activo
+- `Contact`: pausado
+- `Lead`: pausado
+- Documento de referencia: `docs/meta-pixel.md`
+
+### Checklist para retomar
+
+- [x] Instalar Pixel real
+- [x] Publicar cambio en GitHub
+- [x] Enviar actualización a Vercel mediante push
+- [x] Dejar solo `PageView` activo para la primera prueba
+- [x] Documentar el Pixel y su estado actual
+- [ ] Confirmar en Meta Events Manager que entra `PageView`
+- [ ] Confirmar que Vercel ya sirvió la versión con commit `5e7f288`
+- [ ] Reactivar `Contact` después de validar `PageView`
+- [ ] Reactivar `Lead` después de validar `PageView`
+- [ ] Probar home y agenda en celular real
 
 ## Actualización 2026-05-03
 
