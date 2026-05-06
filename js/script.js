@@ -93,17 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     page_name: document.body.dataset.page || "unknown"
                 });
 
-                if (trackName === "whatsapp_click" && typeof window.fbq === "function") {
-                    window.fbq("track", "Contact", {
-                        content_name: label || "whatsapp"
-                    });
-                }
+                // Meta Pixel temporalmente deja solo PageView activo para validar la instalacion base.
+                // Cuando se confirme en Events Manager, se puede reactivar Contact aqui.
+                // if (trackName === "whatsapp_click" && typeof window.fbq === "function") {
+                //     window.fbq("track", "Contact", {
+                //         content_name: label || "whatsapp"
+                //     });
+                // }
 
-                if (trackName === "schedule_click" && typeof window.fbq === "function") {
-                    window.fbq("track", "Lead", {
-                        content_name: label || "agenda"
-                    });
-                }
             });
         });
     };
@@ -347,11 +344,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 page_name: document.body.dataset.page || "agenda"
             });
 
-            if (typeof window.fbq === "function") {
-                window.fbq("track", "Lead", {
-                    content_name: normalizedServiceValue
-                });
-            }
+            // Meta Pixel temporalmente deja solo PageView activo para validar la instalacion base.
+            // Cuando se confirme en Events Manager, se puede reactivar Lead aqui.
+            // if (typeof window.fbq === "function") {
+            //     window.fbq("track", "Lead", {
+            //         content_name: normalizedServiceValue
+            //     });
+            // }
         };
 
         if (shiftSelect) {
