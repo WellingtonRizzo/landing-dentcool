@@ -162,13 +162,30 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const readable = service.replace(/-/g, " ");
+        const serviceLabels = {
+            limpieza: "Limpieza estándar",
+            "limpieza-vip": "Limpieza VIP",
+            blanqueamiento: "Blanqueamiento",
+            restauraciones: "Restauraciones simples",
+            sellantes: "Sellantes",
+            "pack-limpieza-inicial": "Pack Limpieza Inicial",
+            "pack-limpieza-vip-inicial": "Pack Limpieza VIP Inicial",
+            "pack-sonrisa": "Pack Sonrisa",
+            "pack-renovacion": "Pack Renovación",
+            "pack-prevencion": "Pack Limpieza Inicial",
+            evaluacion: "Evaluación clínica con orientación personalizada"
+        };
+        const serviceAliases = {
+            "pack-prevencion": "pack-limpieza-inicial"
+        };
+        const normalizedService = serviceAliases[service] || service;
+        const readable = serviceLabels[normalizedService] || normalizedService.replace(/-/g, " ");
         if (intro) {
             intro.textContent = `Servicio consultado: ${readable}. Selecciona fecha, horario y completa tus datos para continuar a la reserva.`;
         }
 
         if (serviceSelect) {
-            serviceSelect.value = service;
+            serviceSelect.value = normalizedService;
         }
     };
 
