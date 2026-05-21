@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentCool | Sistema de captacion de leads y pacientes</title>
+    <meta name="description" content="Mapa operativo del sistema de captacion DentCool: Ads, landing, WhatsApp, WAHA, n8n, Chatwoot, agenda y seguimiento de tratamientos.">
+    <meta name="theme-color" content="#00BCD4">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00bcd4;
+            --purple: #6d4bdb;
+            --ink: #172033;
+            --muted: #5d6b82;
+            --line: #dbe5ef;
+            --soft: #f5f8fb;
+            --white: #ffffff;
+            --green: #0f9f6e;
+            --amber: #d98a08;
+            --red: #d34848;
+            --shadow: 0 18px 40px rgba(23, 32, 51, 0.1);
+            --radius: 8px;
+            --max: 1180px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--ink);
+            background:
+                linear-gradient(135deg, rgba(0, 188, 212, 0.1), transparent 32%),
+                linear-gradient(230deg, rgba(109, 75, 219, 0.12), transparent 38%),
+                var(--soft);
+            line-height: 1.55;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .wrap {
+            width: min(var(--max), calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(219, 229, 239, 0.9);
+        }
+
+        .topbar-inner {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .brand img {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav a {
+            display: inline-flex;
+            min-height: 38px;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--white);
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .hero {
+            padding: 48px 0 22px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .hero h1 {
+            margin: 0 0 18px;
+            max-width: 820px;
+            font-size: clamp(2.15rem, 6vw, 4.8rem);
+            line-height: 1.02;
+            letter-spacing: 0;
+        }
+
+        .hero p {
+            margin: 0;
+            max-width: 740px;
+            color: var(--muted);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .hero-panel {
+            display: grid;
+            gap: 12px;
+            align-content: start;
+            padding: 20px;
+            border: 1px solid rgba(219, 229, 239, 0.95);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.84);
+            box-shadow: var(--shadow);
+        }
+
+        .label {
+            display: inline-flex;
+            width: fit-content;
+            align-items: center;
+            min-height: 30px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(0, 188, 212, 0.12);
+            color: #04798a;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-panel strong {
+            font-size: 1.15rem;
+        }
+
+        .hero-panel span {
+            color: var(--muted);
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            min-height: 46px;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 16px;
+            border-radius: 999px;
+            background: var(--ink);
+            color: var(--white);
+            font-weight: 900;
+            text-decoration: none;
+            box-shadow: 0 12px 24px rgba(23, 32, 51, 0.14);
+        }
+
+        .section {
+            padding: 28px 0;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: end;
+            margin-bottom: 16px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: clamp(1.45rem, 3vw, 2.2rem);
+            line-height: 1.08;
+        }
+
+        .section-head p {
+            margin: 0;
+            max-width: 560px;
+            color: var(--muted);
+        }
+
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stage,
+        .card,
+        .tool,
+        .route,
+        .metric {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 10px 24px rgba(23, 32, 51, 0.06);
+        }
+
+        .stage {
+            position: relative;
+            min-height: 190px;
+            padding: 18px;
+        }
+
+        .stage::after {
+            content: "";
+            position: absolute;
+            top: 34px;
+            right: -13px;
+            width: 13px;
+            height: 2px;
+            background: var(--cyan);
+        }
+
+        .stage:last-child::after {
+            display: none;
+        }
+
+        .num {
+            display: inline-grid;
+            width: 34px;
+            height: 34px;
+            place-items: center;
+            border-radius: 999px;
+            background: var(--ink);
+            color: var(--white);
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+
+        .stage h3,
+        .card h3,
+        .tool h3,
+        .route h3,
+        .metric h3 {
+            margin: 14px 0 8px;
+            font-size: 1.04rem;
+            line-height: 1.22;
+        }
+
+        .stage p,
+        .card p,
+        .tool p,
+        .route p,
+        .metric p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.94rem;
+        }
+
+        .journey-board {
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .funnel-graphic {
+            display: grid;
+            gap: 9px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .funnel-level {
+            --w: 100%;
+            --c: var(--cyan);
+            width: var(--w);
+            min-height: 76px;
+            justify-self: center;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 42%), var(--c);
+            color: var(--white);
+            box-shadow: 0 12px 26px rgba(23, 32, 51, 0.14);
+        }
+
+        .funnel-level:nth-child(1) {
+            --w: 100%;
+            --c: #3f7fe8;
+        }
+
+        .funnel-level:nth-child(2) {
+            --w: 88%;
+            --c: #00a8c6;
+        }
+
+        .funnel-level:nth-child(3) {
+            --w: 76%;
+            --c: #20a86b;
+        }
+
+        .funnel-level:nth-child(4) {
+            --w: 64%;
+            --c: #d98a08;
+        }
+
+        .funnel-level:nth-child(5) {
+            --w: 52%;
+            --c: #6d4bdb;
+        }
+
+        .funnel-level:nth-child(6) {
+            --w: 42%;
+            --c: #172033;
+        }
+
+        .level-num {
+            display: inline-grid;
+            width: 34px;
+            height: 34px;
+            place-items: center;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 900;
+        }
+
+        .level-copy strong {
+            display: block;
+            line-height: 1.15;
+        }
+
+        .level-copy span {
+            display: block;
+            margin-top: 3px;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.86rem;
+        }
+
+        .level-metric {
+            min-width: 72px;
+            text-align: right;
+            font-size: 0.82rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .journey-map {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .journey-card {
+            min-height: 170px;
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 10px 24px rgba(23, 32, 51, 0.06);
+        }
+
+        .journey-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.02rem;
+        }
+
+        .journey-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .journey-tag {
+            display: inline-flex;
+            min-height: 28px;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: rgba(0, 188, 212, 0.12);
+            color: #04798a;
+            font-size: 0.76rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 16px;
+        }
+
+        .cards-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .card,
+        .tool,
+        .route,
+        .metric {
+            padding: 18px;
+        }
+
+        .tool-stack {
+            display: grid;
+            gap: 10px;
+        }
+
+        .tool {
+            display: grid;
+            grid-template-columns: 94px 1fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        .tool-name {
+            min-height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: rgba(109, 75, 219, 0.11);
+            color: var(--purple);
+            font-weight: 900;
+            font-size: 0.86rem;
+        }
+
+        .routes {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .route {
+            min-height: 220px;
+            border-top: 5px solid var(--cyan);
+        }
+
+        .route.high {
+            border-top-color: var(--green);
+        }
+
+        .route.medium {
+            border-top-color: var(--amber);
+        }
+
+        .route.support {
+            border-top-color: var(--purple);
+        }
+
+        .route ul,
+        .card ul {
+            margin: 12px 0 0;
+            padding-left: 18px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .scoreboard {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 16px;
+        }
+
+        .score-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .score-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+            color: var(--muted);
+        }
+
+        .score-row:last-child {
+            border-bottom: 0;
+        }
+
+        .points {
+            color: var(--ink);
+            font-weight: 900;
+        }
+
+        .status-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .status {
+            padding: 13px;
+            border-radius: var(--radius);
+            border: 1px solid var(--line);
+            background: var(--soft);
+        }
+
+        .status strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .status small {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .metric strong {
+            display: block;
+            color: var(--purple);
+            font-size: 1.5rem;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .conversation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .bubble-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .bubble {
+            padding: 13px 14px;
+            border-radius: var(--radius);
+            background: var(--white);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            box-shadow: 0 6px 18px rgba(23, 32, 51, 0.05);
+        }
+
+        .bubble.bot {
+            border-left: 4px solid var(--cyan);
+        }
+
+        .bubble.human {
+            border-left: 4px solid var(--purple);
+        }
+
+        .note {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-left: 5px solid var(--amber);
+            background: rgba(217, 138, 8, 0.1);
+            border-radius: var(--radius);
+            color: #76500d;
+            font-weight: 700;
+        }
+
+        .footer {
+            padding: 28px 0 42px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 980px) {
+            .hero-grid,
+            .grid-2,
+            .scoreboard,
+            .conversation,
+            .journey-board {
+                grid-template-columns: 1fr;
+            }
+
+            .pipeline,
+            .routes,
+            .metrics {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stage::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .topbar-inner,
+            .section-head {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .pipeline,
+            .routes,
+            .cards-3,
+            .metrics,
+            .journey-map {
+                grid-template-columns: 1fr;
+            }
+
+            .funnel-level {
+                width: 100%;
+                grid-template-columns: auto 1fr;
+            }
+
+            .level-metric {
+                grid-column: 2;
+                text-align: left;
+            }
+
+            .tool {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <a class="brand" href="index.html" aria-label="Volver a DentCool">
+                <img src="dentCool_logo2.png" alt="DentCool">
+                <span>DentCool Captacion</span>
+            </a>
+            <nav class="nav" aria-label="Secciones del flujo">
+                <a href="#flujo">Flujo</a>
+                <a href="#stack">Stack</a>
+                <a href="#rutas">Tratamientos</a>
+                <a href="#score">Score</a>
+                <a href="#metricas">Metricas</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="wrap hero-grid">
+                <div>
+                    <span class="label">Mapa MVP de captacion</span>
+                    <h1>De lead de Instagram a paciente con tratamiento priorizado.</h1>
+                    <p>Este es el funnel completo de captacion: anuncios, landing, WhatsApp, automatizacion, equipo humano, agenda, seguimiento y medicion de tratamientos aceptados. El chatbot es solo una pieza dentro del sistema.</p>
+                </div>
+                <aside class="hero-panel" aria-label="Principio del sistema">
+                    <span class="label">Principio operativo</span>
+                    <strong>El sistema debe captar, calificar, priorizar y convertir. El equipo humano confirma, resuelve objeciones y cierra tratamientos de mayor valor.</strong>
+                    <span>Lenguaje clinico seguro: sin diagnosticar por chat, sin promesas absolutas y con precios claros antes de comenzar.</span>
+                    <div class="cta-row">
+                        <a class="cta-button" href="embudo-captacion.html">Ver y planificar embudo</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="flujo" class="section">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2>Flujo de captacion</h2>
+                    <p>La ruta completa desde anuncio hasta paciente atendido y tratamiento aceptado.</p>
+                </div>
+                <div class="pipeline" aria-label="Pipeline de captacion">
+                    <article class="stage">
+                        <span class="num">1</span>
+                        <h3>Meta Ads</h3>
+                        <p>Campanas por intencion: limpieza, blanqueamiento, estetica, restauraciones, urgencia y rehabilitacion.</p>
+                    </article>
+                    <article class="stage">
+                        <span class="num">2</span>
+                        <h3>Landing</h3>
+                        <p>Mensaje claro, WhatsApp visible, agenda real y UTMs guardadas para atribucion.</p>
+                    </article>
+                    <article class="stage">
+                        <span class="num">3</span>
+                        <h3>WhatsApp</h3>
+                        <p>Entrada principal. WAHA recibe mensajes y los envia al flujo de automatizacion.</p>
+                    </article>
+                    <article class="stage">
+                        <span class="num">4</span>
+                        <h3>Calificacion y prioridad</h3>
+                        <p>n8n y el modulo conversacional preguntan lo minimo, clasifican intencion, calculan score y derivan segun valor.</p>
+                    </article>
+                    <article class="stage">
+                        <span class="num">5</span>
+                        <h3>Agenda y cierre</h3>
+                        <p>Chatwoot muestra la conversacion al equipo. Se agenda, confirma asistencia y se mide tratamiento aceptado.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="stack" class="section">
+            <div class="wrap grid-2">
+                <div>
+                    <div class="section-head">
+                        <h2>Stack recomendado</h2>
+                    </div>
+                    <div class="tool-stack">
+                        <article class="tool">
+                            <span class="tool-name">WAHA</span>
+                            <div>
+                                <h3>Puente WhatsApp no oficial</h3>
+                                <p>Recibe y envia mensajes. Es util para partir, pero debe monitorearse porque depende de sesion y estabilidad de WhatsApp Web.</p>
+                            </div>
+                        </article>
+                        <article class="tool">
+                            <span class="tool-name">n8n</span>
+                            <div>
+                                <h3>Cerebro de automatizacion</h3>
+                                <p>Orquesta preguntas, scoring, webhooks, agenda, alertas internas, seguimiento y registro de eventos.</p>
+                            </div>
+                        </article>
+                        <article class="tool">
+                            <span class="tool-name">Chatwoot</span>
+                            <div>
+                                <h3>Bandeja humana</h3>
+                                <p>Permite que recepcion o clinica tome la conversacion con historial, etiquetas y prioridad.</p>
+                            </div>
+                        </article>
+                        <article class="tool">
+                            <span class="tool-name">Postgres</span>
+                            <div>
+                                <h3>Base de leads</h3>
+                                <p>Guarda lead, origen, score, estado, tratamiento de interes, agenda y conversion.</p>
+                            </div>
+                        </article>
+                        <article class="tool">
+                            <span class="tool-name">Redis</span>
+                            <div>
+                                <h3>Colas y sesiones</h3>
+                                <p>Se usa para cola de trabajos, sesiones temporales y escalabilidad. No reemplaza a Postgres.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-head">
+                        <h2>Datos minimos</h2>
+                    </div>
+                    <div class="cards-3">
+                        <article class="card">
+                            <h3>Identidad</h3>
+                            <p>Nombre, telefono, consentimiento de contacto y canal de entrada.</p>
+                        </article>
+                        <article class="card">
+                            <h3>Intencion</h3>
+                            <p>Tratamiento de interes, urgencia, disponibilidad y comuna.</p>
+                        </article>
+                        <article class="card">
+                            <h3>Atribucion</h3>
+                            <p>UTM source, campaign, content, fbclid, fbp y fbc cuando existan.</p>
+                        </article>
+                    </div>
+                    <div class="note">No guardar ni enviar a Meta diagnosticos, fotos clinicas, historia dental detallada ni datos sensibles innecesarios.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rutas" class="section">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2>Rutas por valor de tratamiento</h2>
+                    <p>El sistema debe priorizar segun probabilidad de cierre, urgencia y valor potencial, no solo por orden de llegada.</p>
+                </div>
+                <div class="routes">
+                    <article class="route high">
+                        <h3>Alto valor</h3>
+                        <p>Casos donde conviene respuesta humana rapida y agenda prioritaria.</p>
+                        <ul>
+                            <li>Implantes o rehabilitacion</li>
+                            <li>Diseno de sonrisa</li>
+                            <li>Carillas o estetica avanzada</li>
+                            <li>Multiples restauraciones</li>
+                        </ul>
+                    </article>
+                    <article class="route medium">
+                        <h3>Valor medio</h3>
+                        <p>Buen fit para agenda directa con educacion y comparacion de opciones.</p>
+                        <ul>
+                            <li>Blanqueamiento</li>
+                            <li>Pack sonrisa</li>
+                            <li>Restauracion simple</li>
+                            <li>Limpieza VIP</li>
+                        </ul>
+                    </article>
+                    <article class="route support">
+                        <h3>Entrada / confianza</h3>
+                        <p>Tratamientos de primera visita que abren relacion y derivan a plan mayor.</p>
+                        <ul>
+                            <li>Evaluacion clinica</li>
+                            <li>Limpieza inicial</li>
+                            <li>Control preventivo</li>
+                            <li>Orientacion general</li>
+                        </ul>
+                    </article>
+                    <article class="route">
+                        <h3>Urgencia</h3>
+                        <p>El modulo conversacional no diagnostica. Debe derivar rapido y recomendar evaluacion profesional.</p>
+                        <ul>
+                            <li>Dolor o molestia</li>
+                            <li>Diente fracturado</li>
+                            <li>Inflamacion</li>
+                            <li>Trauma dental</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="score" class="section">
+            <div class="wrap scoreboard">
+                <article class="card">
+                    <div class="section-head">
+                        <h2>Score de lead</h2>
+                    </div>
+                    <div class="score-list">
+                        <div class="score-row"><span>Telefono valido y WhatsApp activo</span><span class="points">20 pts</span></div>
+                        <div class="score-row"><span>Tratamiento definido o problema claro</span><span class="points">20 pts</span></div>
+                        <div class="score-row"><span>Disponibilidad dentro de 7 dias</span><span class="points">20 pts</span></div>
+                        <div class="score-row"><span>Acepta evaluacion y presupuesto previo</span><span class="points">15 pts</span></div>
+                        <div class="score-row"><span>Vive o trabaja cerca de Nunoa/Providencia/Macul/La Reina</span><span class="points">10 pts</span></div>
+                        <div class="score-row"><span>Responde al contacto inicial</span><span class="points">15 pts</span></div>
+                    </div>
+                </article>
+                <aside class="card">
+                    <div class="section-head">
+                        <h2>Prioridad</h2>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status">
+                            <strong>70-100: lead calificado</strong>
+                            <small>Agenda directa o humano inmediato si es tratamiento de alto valor.</small>
+                        </div>
+                        <div class="status">
+                            <strong>40-69: lead medio</strong>
+                            <small>Automatizacion educa, responde objeciones simples y empuja a agenda.</small>
+                        </div>
+                        <div class="status">
+                            <strong>0-39: baja prioridad</strong>
+                            <small>Seguimiento automatico y derivacion solo si responde o mejora intencion.</small>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="wrap conversation">
+                <article class="card">
+                    <div class="section-head">
+                        <h2>Modulo conversacional</h2>
+                    </div>
+                    <div class="bubble-list">
+                        <div class="bubble bot">Hola, soy el asistente de DentCool. Te ayudo a orientar tu consulta y revisar disponibilidad.</div>
+                        <div class="bubble bot">Para partir: que tratamiento te interesa o que te gustaria mejorar?</div>
+                        <div class="bubble bot">Perfecto. Para orientarte mejor, estas buscando atenderte esta semana o solo cotizar por ahora?</div>
+                        <div class="bubble bot">El valor final depende de evaluacion profesional. Podemos agendar una revision y dejarte un presupuesto claro antes de comenzar.</div>
+                    </div>
+                </article>
+                <article class="card">
+                    <div class="section-head">
+                        <h2>Derivacion humana</h2>
+                    </div>
+                    <div class="bubble-list">
+                        <div class="bubble human">Alto valor: avisar a recepcion con etiqueta "prioridad alta".</div>
+                        <div class="bubble human">Objecion de precio: humano explica opciones, evaluacion y plan por etapas.</div>
+                        <div class="bubble human">Urgencia: ofrecer hora disponible y evitar diagnostico por chat.</div>
+                        <div class="bubble human">No responde: seguimiento automatico a 1 hora, 24 horas y 72 horas.</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="metricas" class="section">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2>Metricas de control</h2>
+                    <p>Estas son las conversiones que conviene mirar antes de escalar presupuesto.</p>
+                </div>
+                <div class="metrics">
+                    <article class="metric">
+                        <strong>Lead</strong>
+                        <p>Escribe por WhatsApp o deja datos desde la landing.</p>
+                    </article>
+                    <article class="metric">
+                        <strong>Qualified</strong>
+                        <p>Score suficiente, tratamiento claro y disponibilidad real.</p>
+                    </article>
+                    <article class="metric">
+                        <strong>Scheduled</strong>
+                        <p>Agenda confirmada con fecha, hora y tratamiento de interes.</p>
+                    </article>
+                    <article class="metric">
+                        <strong>Attended</strong>
+                        <p>Paciente llega a evaluacion o tratamiento inicial.</p>
+                    </article>
+                    <article class="metric">
+                        <strong>Accepted</strong>
+                        <p>Acepta presupuesto o inicia tratamiento de mayor valor.</p>
+                    </article>
+                </div>
+                <div class="note">Para optimizar Meta Ads, el evento importante no es solo "Lead". El norte debe ser "treatment_accepted" y, como paso intermedio, "appointment_attended".</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            Documento interno para ajustar el sistema de captacion DentCool. Version MVP: WAHA + n8n + Chatwoot + Postgres + Redis cuando sea necesario.
+        </div>
+    </footer>
+</body>
+</html>
